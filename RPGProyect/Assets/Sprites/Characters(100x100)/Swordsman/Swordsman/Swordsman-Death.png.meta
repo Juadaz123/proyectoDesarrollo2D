@@ -209,11 +209,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Swordsman-Death_0: 5869134187702734412
-      Swordsman-Death_1: 2871486184008199393
-      Swordsman-Death_2: -1368011172446697058
-      Swordsman-Death_3: 4612305442573679260
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
