@@ -31,19 +31,19 @@ public class SoldierAnimationScript : MonoBehaviour
         axisInput.y = Input.GetAxisRaw("Vertical");
 
 
-        //Animación de daño recibido
+        //Animaciï¿½n de daï¿½o recibido
         if (Input.GetKeyDown(damage))
         {
             RecibeDamage();
         }
 
-        //Animación de muerte
+        //Animaciï¿½n de muerte
         if (life <= 0)
         {
             animatorSoldier.SetBool("Death", true);
         }
 
-        //Animacióm de ataques
+        //Animaciï¿½m de ataques
         if (Input.GetKeyDown(attack1))
         {
             animatorSoldier.SetBool("isAttacking", true);
@@ -97,7 +97,7 @@ public class SoldierAnimationScript : MonoBehaviour
     {
         rbSoldier.linearVelocity = new Vector2(axisInput.x * speed, axisInput.y * speed);
 
-        //Animación Movimiento
+        //Animaciï¿½n Movimiento
         if (axisInput.x > 0 || axisInput.x < 0 || axisInput.y < 0 || axisInput.y > 0)
         {
             animatorSoldier.SetBool("isWalking", true);
