@@ -78,6 +78,7 @@ public class SoldierAnimationScript : MonoBehaviour
         animatorSoldier.SetBool("isAttacking", false);
     }
 
+    //Activa la animación de daño, detiene el movimiento, resta vida
     private void RecibeDamage()
     {
         isDamage = true;
@@ -87,6 +88,7 @@ public class SoldierAnimationScript : MonoBehaviour
         life--;
     }
 
+    //Desactiva la animación de daño
     public void endOfDamage()
     {
         isDamage = false;
