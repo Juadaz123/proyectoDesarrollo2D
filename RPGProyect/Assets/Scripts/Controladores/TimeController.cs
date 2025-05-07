@@ -17,9 +17,9 @@ public class TimeController : MonoBehaviour
        Time.timeScale = _time;
 
         if (controlTurnos.IsMyTurn == true)
-        StopTime();
-        else
         PlayTime();
+        else
+        StopTime();
 
     }
 

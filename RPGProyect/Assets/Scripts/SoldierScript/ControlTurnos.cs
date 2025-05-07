@@ -22,6 +22,6 @@ public class ControlTurnos
     public void EndTurn()
     {
         _isMyTurn = false;
-        UnityEngine.Debug.Log("Turno terminado, esperando...");
+        UnityEngine.Debug.Log("Turno terminado, esperando... " + IsMyTurn + "Valor del turno");
     }
 }

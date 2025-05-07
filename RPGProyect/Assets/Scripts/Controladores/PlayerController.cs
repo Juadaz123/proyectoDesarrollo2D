@@ -1,9 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private MovementData data;
     private Rigidbody2D rb2D;
+    private bool CanMove = true;
 
     private ITurnos turnos;
     private ControlTurnos controlTurnos;
@@ -13,12 +15,17 @@ public class PlayerController : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         controlTurnos = new ControlTurnos();
         turnos = new MovePlayer(controlTurnos);
+
+        //prueba logica para no duplicar turnos
+        CanMove = true;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Time.timeScale > 0f)
+        if (Input.GetMouseButtonDown(0) && CanMove == true)
         {
+            StartCoroutine(Activadorinterno());
+            
             SearchCamera();
         }
     }
@@ -29,5 +36,12 @@ public class PlayerController : MonoBehaviour
         Vector2 direction = mouseWorld - rb2D.position;
 
         turnos.Turno(direction, rb2D, data, this);
+    }
+
+    private IEnumerator Activadorinterno()
+    {
+        CanMove = false;
+        yield return new WaitForSeconds(data.cooldown);
+        CanMove = true;
     }
 }
