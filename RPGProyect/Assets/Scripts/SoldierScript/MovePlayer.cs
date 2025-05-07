@@ -1,42 +1,30 @@
+using System.Collections;
 using UnityEngine;
 
-public class MovePlayer : MonoBehaviour
+public class MovePlayer : ITurnos
 {
-    public float cooldown = 1.5f;
-    public float shootForce = 10f;
+       private ControlTurnos controlTurnos;
 
-    private Rigidbody2D _rb;
-    private Camera _mainCamera;
-
-    private ControlTurnos _controlTurnos;
-
-    private void Awake()
+    public MovePlayer(ControlTurnos turnos)
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _mainCamera = Camera.main;
-        _rb = GetComponent<Rigidbody2D>();
-
-        _controlTurnos = new ControlTurnos(cooldown); // se instancia aquí
+        controlTurnos = turnos;
     }
 
-    private void Update()
+    public void Turno(Vector2 direction, Rigidbody2D rb2D, MovementData data, MonoBehaviour context)
     {
-        _controlTurnos.UpdateTurn(Time.unscaledDeltaTime); // actualiza el turno con tiempo real
+        
+        if (!controlTurnos.IsMyTurn) return;
 
-        // Pausar tiempo si no es turno del jugador
-        Time.timeScale = _controlTurnos.IsMyTurn ? 1f : 0f;
+        rb2D.AddForce(direction.normalized * data.shootForce, ForceMode2D.Impulse);
+        controlTurnos.UpdateTurn();
 
-        if (_controlTurnos.IsMyTurn && Input.GetMouseButtonDown(0))
-        {
-            MoveTowardMouse();
-            _controlTurnos.EndTurn();
-        }
+        context.StartCoroutine(CooldownTimer(data.cooldown, rb2D));
     }
 
-    private void MoveTowardMouse()
+    private IEnumerator CooldownTimer(float cooldown, Rigidbody2D rb2D)
     {
-        Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mouseWorldPos - transform.position).normalized;
-        _rb.AddForce(direction * shootForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(cooldown);
+        rb2D.linearVelocity = Vector2.zero;
+        controlTurnos.EndTurn();
     }
 }
