@@ -1,34 +1,27 @@
-using System.Collections;
-using NUnit.Framework;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+
 
 public class ControlTurnos
 {
-    private bool _ismyTurn;
-    private float _cooldownTime;
+    private bool _isMyTurn = true;
 
-    public ControlTurnos( float cooldownTime)
+    public bool IsMyTurn => _isMyTurn;
+
+
+
+    // Llamar esto cada frame desde MovePlayer
+    public virtual void UpdateTurn()
     {
-        _cooldownTime = cooldownTime;
+        _isMyTurn = true;
+        UnityEngine.Debug.Log("Iniciando Turno..." + IsMyTurn + "Valor del turno");
+
     }
 
-    //Turnos
-    public IEnumerator WaitingTurn()
+    public void EndTurn()
     {
-        _ismyTurn = false;
-        yield return new WaitForSeconds(_cooldownTime);
-        Debug.Log("Termino tu turno");
-    }
-
-    public void ActiveplayerTurn()
-    {
-        _ismyTurn = true;
-    }
-
-    //Comprobador de turno y tiempo
-    private void Update() {
-        if (_ismyTurn)
-        Time.timeScale = 0;
+        _isMyTurn = false;
+        UnityEngine.Debug.Log("Turno terminado, esperando... " + IsMyTurn + "Valor del turno");
     }
 }
