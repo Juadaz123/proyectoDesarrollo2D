@@ -7,4 +7,6 @@ public class MovementData : ScriptableObject
     public float cooldown = 1f;
     public float attackForce = 0f;
 
+    public float Damage = 0f;
+
 }

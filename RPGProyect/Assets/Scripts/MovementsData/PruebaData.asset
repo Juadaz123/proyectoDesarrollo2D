@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595f334ec8c89ec41a6af3d57c3dc2a3, type: 3}
   m_Name: PruebaData
   m_EditorClassIdentifier: 
-  shootForce: 15
-  cooldown: 1
+  shootForce: 20
+  cooldown: 2.2
   attackForce: 2
+  Damage: 0

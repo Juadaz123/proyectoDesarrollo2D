@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private MovementData data;
     private Rigidbody2D rb2D;
-    private bool CanMove = true;
+    public bool CanMove = true;
 
     private ITurnos turnos;
     private ControlTurnos controlTurnos;
@@ -41,7 +41,9 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Activadorinterno()
     {
         CanMove = false;
+        Debug.Log("valor de turno. " + CanMove);
         yield return new WaitForSeconds(data.cooldown);
         CanMove = true;
+        Debug.Log("valor de turno. " + CanMove);
     }
 }
