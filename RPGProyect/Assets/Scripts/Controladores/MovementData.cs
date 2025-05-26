@@ -9,4 +9,6 @@ public class MovementData : ScriptableObject
 
     public float Damage = 0f;
 
+    public Sprite actionicon;
+
 }
