@@ -103,8 +103,8 @@ public class PlayerController : MonoBehaviour
     // Método llamado cuando se realiza un clic (desde el Input System)
     private void OnClickPerformed(InputAction.CallbackContext context)
     {
-        controlTurnos.UpdateTurn();
-        // Solo permite la acción si es el turno del jugador y el sistema de turnos existe
+        if(!controlTurnos.IsMyTurn){
+        controlTurnos.UpdateTurn();}        // Solo permite la acción si es el turno del jugador y el sistema de turnos existe
         if (controlTurnos == null || !controlTurnos.IsMyTurn)
         {
             return; // Salir si no es el turno o no hay ControlTurnos
@@ -239,7 +239,6 @@ public class PlayerController : MonoBehaviour
     public bool IsPlayerStopped()
     {
         // Compara la magnitud al cuadrado de la velocidad con un umbral pequeño para eficiencia.
-        // rb2D.velocity.sqrMagnitude es más eficiente que rb2D.velocity.magnitude.
         return rb2D.linearVelocity.sqrMagnitude < 0.01f; 
     }
 }
