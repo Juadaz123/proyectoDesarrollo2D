@@ -103,10 +103,7 @@ public class PlayerController : MonoBehaviour
     // Método llamado cuando se realiza un clic (desde el Input System)
     private void OnClickPerformed(InputAction.CallbackContext context)
     {
-        //iniciar el turnocuando se hace click
-        if(!controlTurnos.IsMyTurn){
-        controlTurnos.UpdateTurn();}
-
+        controlTurnos.UpdateTurn();
         // Solo permite la acción si es el turno del jugador y el sistema de turnos existe
         if (controlTurnos == null || !controlTurnos.IsMyTurn)
         {
@@ -177,13 +174,13 @@ public class PlayerController : MonoBehaviour
     {
         // 1. Calcular la dirección del clic del ratón en el mundo del juego
         // Usamos Mouse.current.position.ReadValue() del Input System para la posición del ratón.
-        Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 direction = mouseWorld - (Vector2)rb2D.position;
+        Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); 
+        Vector2 direction = mouseWorld - (Vector2)rb2D.position; 
 
         // 2. Determinar qué MovementData usar para esta acción
         // Si la acción tiene su propio MovementData, úsalo; de lo contrario, usa el MovementData por defecto.
         MovementData dataToUse = actionToPerform.movementData != null ? actionToPerform.movementData : defaultmovementdata;
-
+        
         if (dataToUse != null)
         {
             // 3. Pasar la información de la acción al sistema de turnos
@@ -206,7 +203,7 @@ public class PlayerController : MonoBehaviour
             yield return StartCoroutine(ResetAttackAnimation(dataToUse.cooldown));
         }
         // Lógica para animaciones de curación
-        else if (actionToPerform.isHeal)
+        else if (actionToPerform.isHeal) 
         {
             soldierAnim.PlayHealAnimation(true);
             // Esperar a que la animación de curación termine su duración (o cooldown).
@@ -216,12 +213,10 @@ public class PlayerController : MonoBehaviour
 
         // 5. Pequeña espera para asegurar que la acción se procese visualmente o lógicamente
         // antes de pasar al siguiente paso.
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f); 
 
         // 6. Finalmente, finalizar el turno del jugador.
         // Esto es crucial para que el juego progrese al siguiente turno en tu sistema.
-   
-
     }
 
     // --- Corrutina para Resetear Animaciones ---

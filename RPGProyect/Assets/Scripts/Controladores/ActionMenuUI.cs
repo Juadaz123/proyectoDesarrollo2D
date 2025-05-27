@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Necesario para Button, Image, Text
+using UnityEngine.UI;
 
-// Este script se encarga de la creación y gestión de los botones de acción en la UI (Canvas)
 public class ActionMenuUI : MonoBehaviour
 {
-    [SerializeField] private GameObject actionButtonPrefab; // Prefab del botón UI que se instanciará
-    [SerializeField] private Transform actionButtonContainer; // Objeto padre en el Canvas donde se colocarán los botones
+    [SerializeField] private GameObject actionButtonPrefab;
+    [SerializeField] private Transform actionButtonContainer; 
+    
 
-    private PlayerController playerController; // Referencia al PlayerController para llamar a sus métodos
+    private PlayerController playerController;
     private List<Button> actionButtons = new List<Button>(); // Lista para guardar referencias a los botones creados
 
     // Método para inicializar el menú de UI y generar los botones
@@ -34,22 +34,47 @@ public class ActionMenuUI : MonoBehaviour
             // Instanciar el prefab del botón y colocarlo en el contenedor
             GameObject buttonGO = Instantiate(actionButtonPrefab, actionButtonContainer);
             Button button = buttonGO.GetComponent<Button>();
-            Image buttonImage = buttonGO.GetComponent<Image>();
-            Text buttonText = buttonGO.GetComponentInChildren<Text>(); // Asume que el texto es un componente hijo
+ 
+            // --- ACCESO A LOS HIJOS DEL BOTÓN INSTANCIADO ---
+            // 1. Obtener la referencia al componente Image del hijo "MoveIcon"
+            Image actionIconImage = null;
+            Transform iconChild = buttonGO.transform.Find("MoveIcon"); // Busca un hijo llamado "ActionIcon"
+            if (iconChild != null)
+            {
+                actionIconImage = iconChild.GetComponent<Image>();
+            }
+            else
+            {
+                Debug.LogWarning($"ActionMenuUI: No se encontró un hijo llamado 'ActionIcon' en el prefab del botón '{actionButtonPrefab.name}'.");
+            }
 
-            // Configurar el texto y la imagen del botón
+            // 2. Obtener la referencia al componente Text del hijo para el nombre
+            Text buttonText = null;
+            Transform textChild = buttonGO.transform.Find("NameAccionText"); // Busca un hijo llamado "NombreAccionText"
+            if (textChild != null)
+            {
+                buttonText = textChild.GetComponent<Text>();
+            }
+            else
+            {
+                Debug.LogWarning($"ActionMenuUI: No se encontró un hijo llamado 'NombreAccionText' en el prefab del botón '{actionButtonPrefab.name}'.");
+            }
+            // --- FIN DEL ACCESO A HIJOS ---
+
             if (buttonText != null)
             {
-                // buttonText.text = actions[i].name; // Asigna el nombre de la acción como texto del botón
-            }
-            if (buttonImage != null && actions[i].movementData.actionicon != null)
-            {
-                buttonImage.sprite = actions[i].movementData.actionicon; // Asigna el sprite del icono
+                buttonText.text = actions[i].name;
             }
 
+            //asignar sprite desde el movementData
+            if (actionIconImage != null && actions[i].movementData != null && actions[i].movementData.actionicon != null)
+            {
+                actionIconImage.sprite = actions[i].movementData.actionicon;
+                actionIconImage.SetNativeSize(); //imagen al tamaño original
+        }
             int actionIndex = i; // Captura el índice para usarlo en el listener (importante para lambdas)
             // Añade un listener al evento onClick del botón para llamar a SelectAction en PlayerController
-            // button.onClick.AddListener(() => playerController.SelectAction(actionIndex));
+            button.onClick.AddListener(() => playerController.SelectAction(actionIndex));
             actionButtons.Add(button); // Añadir el botón a la lista de referencias
         }
 
@@ -70,7 +95,7 @@ public class ActionMenuUI : MonoBehaviour
                 // Ejemplo simple: cambiar el color del botón para resaltar
                 if (i == selectedIndex)
                 {
-                    actionButtons[i].image.color = Color.yellow; // Color de resaltado
+                    actionButtons[i].image.color = Color.black; // Color de resaltado
                 }
                 else
                 {
