@@ -23,10 +23,8 @@ public class MovePlayer : ITurnos
 
     private IEnumerator CooldownTimer(float cooldown, Rigidbody2D rb2D)
     {
-        controlTurnos.EndTurn();
         yield return new WaitForSeconds(cooldown);
         rb2D.linearVelocity = Vector2.zero;
-        controlTurnos.UpdateTurn();
-        
+        controlTurnos.EndTurn();
     }
 }
