@@ -20,6 +20,7 @@ Juan
 Fabricio:
 Menú de inicio
 Menú de opciones
+Sistema de diálogos
 
 
 
