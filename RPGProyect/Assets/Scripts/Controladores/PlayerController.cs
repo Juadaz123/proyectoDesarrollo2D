@@ -27,11 +27,15 @@ public class PlayerController : MonoBehaviour
     [System.Serializable]
     public class ActionData
     {
-        public string name; // Nombre de la acción (ej. "Movimiento Básico", "Ataque Espada")
-        public MovementData movementData; // El ScriptableObject MovementData asociado a esta acción
-        public int attackAnimationIndex; // Índice para la animación de ataque (1, 2, 3 para arco)
-        public bool isAttack; // Indica si es un ataque (para lógica de flechas, etc.)
-        public bool isHeal; // Indica si es una acción de curación
+         public string name;
+        [Tooltip("El ScriptableObject MovementData asociado a esta acción, que ahora también contiene el daño y tipo de daño.")]
+        public MovementData movementData; // Este MovementData ahora contiene el daño y tipo de daño
+        [Tooltip("Índice para la animación de ataque (ej. 1, 2, 3 para arco).")]
+        public int attackAnimationIndex;
+        [Tooltip("Indica si esta acción es un ataque (para lógica de flechas, aplicación de daño).")]
+        public bool isAttack;
+        [Tooltip("Indica si esta acción es de curación.")]
+        public bool isHeal;
     }
 
     // --- Métodos de Ciclo de Vida de Unity ---
@@ -113,6 +117,14 @@ public class PlayerController : MonoBehaviour
         // Obtiene la ActionData de la acción actualmente seleccionada
         ActionData selectedAction = actions[currentActionIndex];
 
+        // Obtener el MovementData para esta acción
+        MovementData dataToUse = selectedAction.movementData != null ? selectedAction.movementData : defaultmovementdata;
+
+        if (dataToUse == null)
+        {
+            Debug.LogWarning($"La acción '{selectedAction.name}' no tiene un MovementData asignado y no hay defaultmovementdata para usar.");
+            return;
+        }
         // Lógica específica para el ataque de arco: verificar y decrementar flechas
         if (selectedAction.isAttack && selectedAction.attackAnimationIndex == 3) // Si es un ataque de arco
         {
@@ -131,7 +143,7 @@ public class PlayerController : MonoBehaviour
         // --- ¡Aquí es donde iniciamos la corrutina principal de la acción! ---
         // Toda la lógica de ejecución de la acción (movimiento, animaciones, fin de turno)
         // se maneja dentro de esta corrutina para controlar los tiempos.
-        StartCoroutine(PerformActionCoroutine(selectedAction)); 
+        StartCoroutine(PerformActionCoroutine(selectedAction, dataToUse)); 
     }
 
     // Método para seleccionar una acción por índice (llamado por teclado o botones UI)
@@ -170,27 +182,17 @@ public class PlayerController : MonoBehaviour
 
     // --- Corrutina Principal para la Ejecución de Acciones ---
     // ESTA ES LA CORRUTINA PerformActionCoroutine QUE DEBE ESTAR EN TU CÓDIGO
-    private IEnumerator PerformActionCoroutine(ActionData actionToPerform)
+    private IEnumerator PerformActionCoroutine(ActionData actionToPerform, MovementData dataToUse)
     {
         // 1. Calcular la dirección del clic del ratón en el mundo del juego
         // Usamos Mouse.current.position.ReadValue() del Input System para la posición del ratón.
         Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); 
         Vector2 direction = mouseWorld - (Vector2)rb2D.position; 
 
-        // 2. Determinar qué MovementData usar para esta acción
-        // Si la acción tiene su propio MovementData, úsalo; de lo contrario, usa el MovementData por defecto.
-        MovementData dataToUse = actionToPerform.movementData != null ? actionToPerform.movementData : defaultmovementdata;
         
-        if (dataToUse != null)
-        {
-            // 3. Pasar la información de la acción al sistema de turnos
+       
             // Esto es donde se realiza el movimiento o el cálculo del ataque en tu sistema ITurnos/MovePlayer.
-            turnos.Turno(direction, rb2D, dataToUse, this);
-        }
-        else
-        {
-            Debug.LogWarning($"La acción '{actionToPerform.name}' no tiene un MovementData asignado y no hay defaultmovementdata para usar.");
-        }
+        turnos.Turno(direction, rb2D, dataToUse, this);
 
         // 4. Disparar animaciones y esperar sus tiempos de recarga (cooldown)
         // Lógica para animaciones de ataque
@@ -201,22 +203,30 @@ public class PlayerController : MonoBehaviour
             soldierAnim.PlayAttackAnimation(true, actionToPerform.attackAnimationIndex);
             // Esperar a que la animación termine su duración (o cooldown) antes de continuar.
             yield return StartCoroutine(ResetAttackAnimation(dataToUse.cooldown));
+            
+            //a usar un metodo con un collider
         }
         // Lógica para animaciones de curación
-        else if (actionToPerform.isHeal) 
+        else if (actionToPerform.isHeal)
         {
+            LifeScript playerLife = GetComponent<LifeScript>();
+            if (playerLife != null)
+            {
+                playerLife.Heal(10f);
+            }
+            //pienso cambiar esto por logica de inventario luego
+
             soldierAnim.PlayHealAnimation(true);
             // Esperar a que la animación de curación termine su duración (o cooldown).
             yield return StartCoroutine(ResetAttackAnimation(dataToUse.cooldown));
         }
         // Puedes añadir más bloques 'else if' para otros tipos de acciones con animaciones específicas.
-
+        /* 
+        quiero usar un swicht pero no me acuerdo como y da flojera leer la docu 
+        */
         // 5. Pequeña espera para asegurar que la acción se procese visualmente o lógicamente
-        // antes de pasar al siguiente paso.
         yield return new WaitForSeconds(0.1f); 
 
-        // 6. Finalmente, finalizar el turno del jugador.
-        // Esto es crucial para que el juego progrese al siguiente turno en tu sistema.
     }
 
     // --- Corrutina para Resetear Animaciones ---
