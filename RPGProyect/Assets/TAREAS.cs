@@ -17,6 +17,9 @@ Juan
 8. terminar de implementar un sistema de patrones de moviminento para enemigos
 Juan
 
+Fabricio:
+Menú de inicio
+Menú de opciones
 
 
 
