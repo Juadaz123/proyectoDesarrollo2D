@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f61af9c4147f5a4896c4ad60be64343, type: 3}
-  m_Name: SoldierBaseStats
+  m_Script: {fileID: 11500000, guid: ce10c7dc6bc706e40a3c1f0d4aa7a15d, type: 3}
+  m_Name: PhysicalDamage
   m_EditorClassIdentifier: 
-  MaxLife: 10
-  Defense: 2
-  Evasion: 0.5
+  _name: picos
+  _armorPenetration: 0
