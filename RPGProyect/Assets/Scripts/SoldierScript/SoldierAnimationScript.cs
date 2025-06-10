@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SoldierAnimationScript : MonoBehaviour
@@ -8,12 +9,29 @@ public class SoldierAnimationScript : MonoBehaviour
     private Vector2 axisInput;
     private bool isDamage = false, isDeath = false;
 
-    [Range(0, 5)] public int life = 5;
+
+
+    private GameObject AttackCollider;
+    [SerializeField] private string playerAttackCollider;
+    [Tooltip("nombre del collider del objeto hijo que maneja el ataque del jugador")]
+
 
 
     private void Awake()
     {
         animatorSoldier = GetComponent<Animator>();
+
+        AttackCollider = GameObject.Find(playerAttackCollider);
+    }
+
+    private void Start() {
+        if (AttackCollider == null)
+        {
+            Debug.LogError($"No se a encomtrado ningun objeto con el nombre {playerAttackCollider}");
+
+            AttackCollider.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+        }
+
     }
 
     private void Update()
@@ -23,38 +41,29 @@ public class SoldierAnimationScript : MonoBehaviour
         if (isDamage) return;
 
 
-
-
-
-        // //usar el uso de recibe damage con un oncollison enter2d
-        // if (Input.GetKeyDown(damage))
-        // {
-        //     RecibeDamage();
-        // }
-
-        //asignar un evento mediante el collider, para el daño.
-
-        //Animaci�n de muerte
-        if (life <= 0)
-        {
-            animatorSoldier.SetBool("Death", true);
-        }
-
         RotatePlayer();
     }
 
+
+    //eventos de ataque
+    public void StartAttack()
+    {
+         AttackCollider.gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
+    }
 
 
     public void EndAttack()
     {
         animatorSoldier.SetBool("isAttacking", false);
+        AttackCollider.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
     }
 
-    private void RecibeDamage()
+    //eventos de daño animaciones
+
+    public void RecibeDamage()
     {
         isDamage = true;
         animatorSoldier.SetBool("isDamage", true);
-        life--; // a revisar si manejar la vida aqui
     }
 
     public void endOfDamage()
@@ -126,6 +135,12 @@ public class SoldierAnimationScript : MonoBehaviour
         animatorSoldier.SetBool("isAttacking", false);
         animatorSoldier.SetBool("isHealing", false);
         animatorSoldier.SetInteger("Attack", 0); // Resetea el parámetro Attack a un valor "neutro"
+    }
+
+    //referencia a la animacion de muerte
+    public void DeathAnimationPLay()
+    {
+        animatorSoldier.SetBool("Death", true);
     }
 
 }

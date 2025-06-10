@@ -13,6 +13,8 @@ public class LifeScript : MonoBehaviour, ILifeSystem
     public float Defense => _baseStats != null ? _baseStats.Defense : 0f;
     public float Evasion => _baseStats != null ? _baseStats.Evasion : 0f;
 
+    public bool isEvationFiscal = false;
+
     protected virtual void Awake()
     {
         if (_baseStats != null)
@@ -28,9 +30,11 @@ public class LifeScript : MonoBehaviour, ILifeSystem
 
     public virtual void TakeDamage(float damageAmount, IDamageType damageType)
     {
+        isEvationFiscal = false;
         if (Random.value < Evasion)
         {
             Debug.Log($"{gameObject.name} evadió el ataque ({damageType.Name} tipo)!");
+            isEvationFiscal =true;
             return;
         }
 
