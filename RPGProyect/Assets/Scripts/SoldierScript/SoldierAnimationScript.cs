@@ -24,7 +24,8 @@ public class SoldierAnimationScript : MonoBehaviour
         AttackCollider = GameObject.Find(playerAttackCollider);
     }
 
-    private void Start() {
+    private void Start()
+    {
         if (AttackCollider == null)
         {
             Debug.LogError($"No se a encomtrado ningun objeto con el nombre {playerAttackCollider}");
@@ -41,14 +42,13 @@ public class SoldierAnimationScript : MonoBehaviour
         if (isDamage) return;
 
 
-        RotatePlayer();
     }
 
 
     //eventos de ataque
     public void StartAttack()
     {
-         AttackCollider.gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
+        AttackCollider.gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
     }
 
 
@@ -73,19 +73,9 @@ public class SoldierAnimationScript : MonoBehaviour
     }
 
 
-    private void RotatePlayer()
-    {
-        if (axisInput.x < 0)
-        {
-            transform.localScale = new Vector2(-1, 1);
-        }
-        else if (axisInput.x > 0)
-        {
-            transform.localScale = new Vector2(1, 1);
-        }
-    }
 
-    //eventos para llamar animaciones
+
+    //eventos para llamar animaciones de ataque
     public void PlayAttackAnimation(bool isAttacking, int indexAttack)
     {
         animatorSoldier.SetBool("isAttacking", isAttacking);
@@ -95,24 +85,6 @@ public class SoldierAnimationScript : MonoBehaviour
         }
     }
 
-    public void PlayAttack2Animation(bool isAttacking)
-    {
-        animatorSoldier.SetBool("isAttacking", isAttacking);
-        if (isAttacking)
-        {
-            animatorSoldier.SetInteger("Attack", 2);
-        }
-    }
-
-
-    public void PlayAttack3Animation(bool isAttacking)
-    {
-        animatorSoldier.SetBool("isAttacking", isAttacking);
-        if (isAttacking)
-        {
-            animatorSoldier.SetInteger("Attack", 3);
-        }
-    }
 
     public void PlayHealAnimation(bool isHealing)
     {
@@ -129,7 +101,7 @@ public class SoldierAnimationScript : MonoBehaviour
     {
         animatorSoldier.SetBool("isWalking", isWalking);
     }
-    
+
     public void ResetAllActionAnimations()
     {
         animatorSoldier.SetBool("isAttacking", false);
@@ -142,5 +114,20 @@ public class SoldierAnimationScript : MonoBehaviour
     {
         animatorSoldier.SetBool("Death", true);
     }
+    
+    //logica para rotat al jugador
+    public void RotatePlayer(Vector2 direction)
+    {
+        if (direction.x < 0) // Si el movimiento es a la izquierda
+        {
+            transform.localScale = new Vector2(-1, 1);
+        }
+        else if (direction.x > 0) // Si el movimiento es a la derecha
+        {
+            transform.localScale = new Vector2(1, 1);
+        }
+    }
+
 
 }
+

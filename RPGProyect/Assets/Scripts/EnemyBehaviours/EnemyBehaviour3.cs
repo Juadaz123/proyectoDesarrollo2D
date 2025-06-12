@@ -36,7 +36,7 @@ public class EnemyBehaviour3 : EnemyBehaviourBase
         float sineOffset = Mathf.Sin(_timeElapsed * _sineFrequency) * _sineAmplitude;
         Vector2 finalDirection = (baseDirectionToPlayer + perpendicularDirection * sineOffset).normalized;
 
-        rb2D.AddForce(finalDirection * data.shootForce);
+        rb2D.AddForce(finalDirection * data.shootForce, ForceMode2D.Impulse);
         if (_enemyController != null) // Comprobación adicional
         {
             _enemyController.StartCoroutine(CooldownTimer(data.cooldown, rb2D));

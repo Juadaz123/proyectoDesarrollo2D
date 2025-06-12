@@ -2,113 +2,141 @@ using UnityEngine;
 
 public class SlimeAnimation : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D rbSlime;
-    [SerializeField] int speed;
-    [SerializeField] KeyCode attack1, attack2, damage;
+    [SerializeField] private GameObject attackColliderObject; 
+
+    
     private Animator animatorSlime;
-    private Vector2 axisInput;
-    private bool isDamage = false, isDeath = false;
-
-    [Range(0, 5)] public int life = 5;
-
+    
+    private bool isDamageActive = false; 
+    private bool isDeathActive = false; 
 
     private void Awake()
     {
-        rbSlime = GetComponent<Rigidbody2D>();
         animatorSlime = GetComponent<Animator>();
+
+        if (animatorSlime == null)
+        {
+            Debug.LogError("SlimeAnimation: No se encontrÃ³ el componente Animator en este GameObject.");
+        }
+        
+        if (attackColliderObject != null)
+        {
+            Collider2D collider = attackColliderObject.GetComponent<Collider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
+            else
+            {
+                Debug.LogWarning($"SlimeAnimation: El objeto '{attackColliderObject.name}' no tiene un componente Collider2D.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("SlimeAnimation: No se ha asignado un objeto de collider de ataque en el Inspector.");
+        }
     }
 
     private void Update()
     {
-        if (isDeath) return;
+      if (isDeathActive) return;
 
-        if (isDamage) return;
-
-
-
-        axisInput.x = Input.GetAxisRaw("Horizontal");
-        axisInput.y = Input.GetAxisRaw("Vertical");
-
-
-        //Animación de daño recibido
-        if (Input.GetKeyDown(damage))
-        {
-            RecibeDamage();
-        }
-
-        //Animación de muerte
-        if (life <= 0)
-        {
-            animatorSlime.SetBool("isDeath", true);
-        }
-
-        //Animacióm de ataques
-        if (Input.GetKeyDown(attack1))
-        {
-            animatorSlime.SetBool("isAttacking", true);
-            animatorSlime.SetInteger("Attack", 1);
-        }
-        if (Input.GetKeyDown(attack2))
-        {
-            animatorSlime.SetBool("isAttacking", true);
-            animatorSlime.SetInteger("Attack", 2);
-        }
+        if (isDamageActive) return;
     }
 
-    private void FixedUpdate()
+    public void SetWalkingAnimation(bool isWalking)
     {
-        //Movimiento axis
-        if (!isDeath)
+        if (isDeathActive || isDamageActive) return;
+        animatorSlime.SetBool("isWalking", isWalking);
+    }
+
+    public void PlayAttackAnimation(int attackIndex)
+    {
+        if (isDeathActive || isDamageActive) return;
+        animatorSlime.SetBool("isAttacking", true);
+        animatorSlime.SetInteger("Attack", attackIndex);
+    }
+
+    public void ResetAllActionAnimations()
+    {
+        animatorSlime.SetBool("isAttacking", false);
+        animatorSlime.SetInteger("Attack", 0);
+        SetWalkingAnimation(false);
+    }
+
+    public void EndAttackAnimation()
+    {
+        animatorSlime.SetBool("isAttacking", false);
+        animatorSlime.SetInteger("Attack", 0);
+        EndAttackCollider();
+    }
+
+    public void PlayDamageAnimation()
+    {
+        if (isDeathActive) return; 
+        isDamageActive = true;
+        animatorSlime.SetBool("isHurting", true);
+    }
+
+    public void EndDamageAnimation()
+    {
+        isDamageActive = false;
+        animatorSlime.SetBool("isHurting", false);
+    }
+
+    public void PlayDeathAnimation()
+    {
+        isDeathActive = true;
+        animatorSlime.SetBool("isDeath", true);
+    }
+
+    public void StartAttackCollider()
+    {
+
+        // Debug.Log("Mensaje puerda StartAtattackCOllider");
+        if (attackColliderObject != null)
         {
-            if (!isDamage)
+            CapsuleCollider2D collider = attackColliderObject.GetComponent<CapsuleCollider2D>();
+            if (collider != null)
             {
-                Movimiento();
+                collider.enabled = true;
+                Debug.Log("Slime Attack Collider Enabled!");
             }
         }
     }
 
-    public void EndAttack()
+    public void EndAttackCollider()
     {
-        animatorSlime.SetBool("isAttacking", false);
-    }
-
-    //Activa la animación de daño, detiene el movimiento, resta vida
-    private void RecibeDamage()
-    {
-        isDamage = true;
-        axisInput = Vector2.zero; //Limpiar inputs
-        rbSlime.linearVelocity = Vector2.zero;
-        animatorSlime.SetBool("isHurting", true);
-        life--;
-    }
-
-    //Desactiva la animación de daño
-    public void endOfDamage()
-    {
-        isDamage = false;
-        animatorSlime.SetBool("isHurting", false);
-    }
-
-    private void Movimiento()
-    {
-        rbSlime.linearVelocity = new Vector2(axisInput.x * speed, axisInput.y * speed);
-
-        //Animación Movimiento
-        if (axisInput.x > 0 || axisInput.x < 0 || axisInput.y < 0 || axisInput.y > 0)
+        if (attackColliderObject != null)
         {
-            animatorSlime.SetBool("isWalking", true);
+            CapsuleCollider2D collider = attackColliderObject.GetComponent<CapsuleCollider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+                Debug.Log("Slime Attack Collider Disabled!");
+            }
         }
-        else { animatorSlime.SetBool("isWalking", false); }
+    }
 
-        //Giro de sentido
-        if (axisInput.x < 0)
+    public void RotateSlime(Vector2 direction)
+    {
+        if (direction.x < 0)
         {
             transform.localScale = new Vector2(-1, 1);
         }
-        else if (axisInput.x > 0)
+        else if (direction.x > 0)
         {
             transform.localScale = new Vector2(1, 1);
         }
     }
 
+    public bool IsDamageActive()
+    {
+        return isDamageActive;
+    }
+
+    public bool IsDeathActive()
+    {
+        return isDeathActive;
+    }
 }
