@@ -13,7 +13,7 @@ public class TimeController : MonoBehaviour
     //ajustar el tiempo
     void Start()
     {
-        _time = 1;
+        _time = 0;
         // detectar jugador y su rIgidbody
         player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)

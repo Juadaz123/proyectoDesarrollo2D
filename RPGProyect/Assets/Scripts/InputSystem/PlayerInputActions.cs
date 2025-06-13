@@ -238,6 +238,76 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Movement Free"",
+            ""id"": ""73b76fd7-15e0-49f9-b8ee-78e5f67677f5"",
+            ""actions"": [
+                {
+                    ""name"": ""movimiento"",
+                    ""type"": ""Button"",
+                    ""id"": ""212898f3-2fce-43fb-a165-999aae5974f6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""interactuar"",
+                    ""type"": ""Button"",
+                    ""id"": ""fc17d43d-384f-4cd5-a845-b12e585841da"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0a38b224-ab36-4f32-9ec3-49f869fcee0d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""movimiento"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48db3bd0-feec-474d-8bb0-8cd0d3f31b16"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""movimiento"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""899beee7-dff4-41eb-b9fb-41b12d506ebc"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""interactuar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""064cdaeb-8d9d-45e5-a1dd-090c4dfeedb0"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""interactuar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -249,11 +319,16 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Gameplay_Ataque2 = m_Gameplay.FindAction("Ataque 2", throwIfNotFound: true);
         m_Gameplay_Ataque3 = m_Gameplay.FindAction("Ataque 3", throwIfNotFound: true);
         m_Gameplay_Ataque4 = m_Gameplay.FindAction("Ataque 4", throwIfNotFound: true);
+        // Movement Free
+        m_MovementFree = asset.FindActionMap("Movement Free", throwIfNotFound: true);
+        m_MovementFree_movimiento = m_MovementFree.FindAction("movimiento", throwIfNotFound: true);
+        m_MovementFree_interactuar = m_MovementFree.FindAction("interactuar", throwIfNotFound: true);
     }
 
     ~@PlayerInputAction()
     {
         UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, PlayerInputAction.Gameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_MovementFree.enabled, "This will cause a leak and performance issues, PlayerInputAction.MovementFree.Disable() has not been called.");
     }
 
     /// <summary>
@@ -465,6 +540,113 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="GameplayActions" /> instance referencing this action map.
     /// </summary>
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Movement Free
+    private readonly InputActionMap m_MovementFree;
+    private List<IMovementFreeActions> m_MovementFreeActionsCallbackInterfaces = new List<IMovementFreeActions>();
+    private readonly InputAction m_MovementFree_movimiento;
+    private readonly InputAction m_MovementFree_interactuar;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Movement Free".
+    /// </summary>
+    public struct MovementFreeActions
+    {
+        private @PlayerInputAction m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public MovementFreeActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "MovementFree/movimiento".
+        /// </summary>
+        public InputAction @movimiento => m_Wrapper.m_MovementFree_movimiento;
+        /// <summary>
+        /// Provides access to the underlying input action "MovementFree/interactuar".
+        /// </summary>
+        public InputAction @interactuar => m_Wrapper.m_MovementFree_interactuar;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_MovementFree; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="MovementFreeActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(MovementFreeActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="MovementFreeActions" />
+        public void AddCallbacks(IMovementFreeActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MovementFreeActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MovementFreeActionsCallbackInterfaces.Add(instance);
+            @movimiento.started += instance.OnMovimiento;
+            @movimiento.performed += instance.OnMovimiento;
+            @movimiento.canceled += instance.OnMovimiento;
+            @interactuar.started += instance.OnInteractuar;
+            @interactuar.performed += instance.OnInteractuar;
+            @interactuar.canceled += instance.OnInteractuar;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="MovementFreeActions" />
+        private void UnregisterCallbacks(IMovementFreeActions instance)
+        {
+            @movimiento.started -= instance.OnMovimiento;
+            @movimiento.performed -= instance.OnMovimiento;
+            @movimiento.canceled -= instance.OnMovimiento;
+            @interactuar.started -= instance.OnInteractuar;
+            @interactuar.performed -= instance.OnInteractuar;
+            @interactuar.canceled -= instance.OnInteractuar;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="MovementFreeActions.UnregisterCallbacks(IMovementFreeActions)" />.
+        /// </summary>
+        /// <seealso cref="MovementFreeActions.UnregisterCallbacks(IMovementFreeActions)" />
+        public void RemoveCallbacks(IMovementFreeActions instance)
+        {
+            if (m_Wrapper.m_MovementFreeActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="MovementFreeActions.AddCallbacks(IMovementFreeActions)" />
+        /// <seealso cref="MovementFreeActions.RemoveCallbacks(IMovementFreeActions)" />
+        /// <seealso cref="MovementFreeActions.UnregisterCallbacks(IMovementFreeActions)" />
+        public void SetCallbacks(IMovementFreeActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MovementFreeActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MovementFreeActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="MovementFreeActions" /> instance referencing this action map.
+    /// </summary>
+    public MovementFreeActions @MovementFree => new MovementFreeActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay" which allows adding and removing callbacks.
     /// </summary>
@@ -507,5 +689,27 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAtaque4(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Movement Free" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="MovementFreeActions.AddCallbacks(IMovementFreeActions)" />
+    /// <seealso cref="MovementFreeActions.RemoveCallbacks(IMovementFreeActions)" />
+    public interface IMovementFreeActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "movimiento" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMovimiento(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "interactuar" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteractuar(InputAction.CallbackContext context);
     }
 }

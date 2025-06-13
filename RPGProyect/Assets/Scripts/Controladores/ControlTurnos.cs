@@ -11,7 +11,7 @@ public class ControlTurnos : MonoBehaviour
 
     void Start()
     {
-        IsMyTurn = true;
+        IsMyTurn = false;
     }
 
     // Llamar esto cada turno desde MovePlayer

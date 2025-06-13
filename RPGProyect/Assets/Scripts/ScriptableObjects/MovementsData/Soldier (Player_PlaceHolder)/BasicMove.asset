@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595f334ec8c89ec41a6af3d57c3dc2a3, type: 3}
   m_Name: BasicMove
   m_EditorClassIdentifier: 
-  shootForce: 10
+  shootForce: 8
   cooldown: 2
   attackForce: 0
-  Damage: 0
+  damageAmount: 0
+  damageType: {fileID: 0}
   actionicon: {fileID: -4195647796165820189, guid: b8877f393a6f9df41bbf89e6c3895d25, type: 3}

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595f334ec8c89ec41a6af3d57c3dc2a3, type: 3}
+  m_Name: MoveSlime
+  m_EditorClassIdentifier: 
+  shootForce: 8
+  cooldown: 1.6
+  attackForce: 0
+  damageAmount: 0
+  damageType: {fileID: 11400000, guid: 7102014e8661e184da0013e8cfd25e7f, type: 2}
+  actionicon: {fileID: 5206410529515300821, guid: 2109d36c485913b4a89fba3ada86c97b, type: 3}

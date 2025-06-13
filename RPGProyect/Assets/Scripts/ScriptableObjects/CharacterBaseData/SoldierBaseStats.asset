@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f61af9c4147f5a4896c4ad60be64343, type: 3}
   m_Name: SoldierBaseStats
   m_EditorClassIdentifier: 
-  MaxLife: 10
+  MaxLife: 100
   Defense: 2
-  Evasion: 5
+  Evasion: 0.5

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595f334ec8c89ec41a6af3d57c3dc2a3, type: 3}
   m_Name: Attack2Soldier
   m_EditorClassIdentifier: 
-  shootForce: 8
-  cooldown: 1.5
+  shootForce: 7
+  cooldown: 3
   attackForce: 2
-  Damage: 4
+  damageAmount: 3
+  damageType: {fileID: 11400000, guid: 7102014e8661e184da0013e8cfd25e7f, type: 2}
   actionicon: {fileID: 4949258004858939775, guid: a0be0d19af0c5ce45977904c9a9bffed, type: 3}

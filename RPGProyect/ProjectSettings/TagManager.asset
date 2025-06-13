@@ -5,14 +5,16 @@ TagManager:
   serializedVersion: 3
   tags:
   - PanelMenu
+  - Hazards
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Hazards
   - Water
   - UI
-  - 
+  - Enemies
   - 
   - 
   - 
