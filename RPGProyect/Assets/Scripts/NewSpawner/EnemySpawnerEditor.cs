@@ -13,21 +13,28 @@ public class EnemySpawnerEditor : Editor
         GUILayout.Space(10);
         EditorGUILayout.LabelField("Spawner Controls", EditorStyles.boldLabel);
 
-        if (GUILayout.Button("Spawn Next Waves"))
-        {
-            spawner.SpawnNextWaves();
-        }
-
         if (GUILayout.Button("Destroy All Enemies"))
         {
             spawner.DestroyAllEnemies();
         }
 
-        if (GUILayout.Button("Reset Waves"))
+        if (GUILayout.Button("Reset All Waves"))
         {
             spawner.ResetWaves();
         }
+
+        GUILayout.Space(5);
+        EditorGUILayout.LabelField("Spawn Next Wave by Config", EditorStyles.boldLabel);
+
+        foreach (var config in spawner.spawnConfigs)
+        {
+            if (GUILayout.Button($"Spawn Next Wave in {config.name}"))
+            {
+                spawner.SpawnNextWaveForConfig(config);
+            }
+        }
     }
 }
+
 
 
