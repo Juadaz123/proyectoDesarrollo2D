@@ -313,7 +313,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -3455,7 +3455,7 @@ Tilemap:
     m_Data: {r: 0.98470855, g: 0.4150764, b: 0.4166779, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.90188676, g: 0.03913838, b: 0.03913838, a: 0}
   m_Origin: {x: -14, y: -11, z: 0}
   m_Size: {x: 22, y: 14, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -44228,27 +44228,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnConfigs:
   - name: area1
-    tilemap: {fileID: 84051128}
+    spawnTilemap: {fileID: 84051128}
     enemyPrefabs:
     - {fileID: 133682673755315122, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
-    enemiesPerWave: 5
     totalWaves: 3
-    currentWave: 3
+    enemiesPerWave: 5
+    spawnDelay: 0.5
+    doorTriggerArea: {fileID: 0}
+    currentWave: 1
   - name: area2
-    tilemap: {fileID: 631544231}
+    spawnTilemap: {fileID: 0}
     enemyPrefabs:
     - {fileID: 133682673755315122, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
-    enemiesPerWave: 5
     totalWaves: 3
-    currentWave: 3
+    enemiesPerWave: 5
+    spawnDelay: 0.5
+    doorTriggerArea: {fileID: 0}
+    currentWave: 0
   - name: area3
-    tilemap: {fileID: 1676138949}
+    spawnTilemap: {fileID: 0}
     enemyPrefabs:
     - {fileID: 133682673755315122, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
-    enemiesPerWave: 5
     totalWaves: 3
-    currentWave: 3
+    enemiesPerWave: 5
+    spawnDelay: 0.5
+    doorTriggerArea: {fileID: 0}
+    currentWave: 0
   startAutomatically: 1
+  spawnIndicatorPrefab: {fileID: 0}
+  indicatorDuration: 1.5
 --- !u!4 &1764988103
 Transform:
   m_ObjectHideFlags: 0
