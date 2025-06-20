@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private ITurnos turnos; // Interfaz para el sistema de turnos (ej. MovePlayer)
     private ControlTurnos controlTurnos; // Script principal que gestiona los turnos
     private SoldierAnimationScript soldierAnim; // Script para el control de animaciones del jugador
-    private PlayerInputAction playerInput; // Referencia al Input Actions Asset
     private ActionMenuUI actionMenuUI; // Referencia al script de UI del menú de acciones
 
     // --- NUEVO: Referencia al GameObject del collider de ataque del jugador ---
@@ -44,30 +43,6 @@ public class PlayerController : MonoBehaviour
     }
 
     // --- Métodos de Ciclo de Vida de Unity ---
-
-    private void Awake()
-    {
-        playerInput = new PlayerInputAction(); // Instanciar el Input Actions Asset
-
-        // Suscribir métodos a los eventos del Input System
-        playerInput.Gameplay.Mover.performed += OnClickPerformed; 
-        
-        playerInput.Gameplay.Ataque1.performed += ctx => SelectAction(1); 
-        playerInput.Gameplay.Ataque2.performed += ctx => SelectAction(2); 
-        playerInput.Gameplay.Ataque3.performed += ctx => SelectAction(3); 
-        playerInput.Gameplay.Ataque4.performed += ctx => SelectAction(4); 
-    }
-
-    private void OnEnable()
-    {
-        playerInput.Enable(); // Habilitar el Action Map 'Gameplay' al activar el objeto
-    }
-
-    private void OnDisable()
-    {
-        playerInput.Disable(); // Deshabilitar el Action Map 'Gameplay' al desactivar el objeto
-    }
-
     private void Start()
     {
         rb2D = GetComponent<Rigidbody2D>(); // Obtener referencia al Rigidbody2D en este GameObject
@@ -115,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     // --- Métodos de Entrada y Lógica de Acciones ---
 
-    private void OnClickPerformed(InputAction.CallbackContext context)
+    public void OnClickPerformed(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
         
@@ -181,16 +156,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning($"Índice de acción fuera de rango: {index}. Acciones disponibles: {actions.Count}");
         }
-    }
-
-    void Update()
-    {
-        // Estos Inputs son redundantes si ya tienes las suscripciones en Awake() con el Input System.
-        if (Input.GetKeyDown(KeyCode.Q)) SelectAction(0);  
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectAction(1);  
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SelectAction(2); 
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SelectAction(3); 
-        if (Input.GetKeyDown(KeyCode.Alpha4)) SelectAction(4); 
     }
 
     // --- Corrutina Principal para la Ejecución de Acciones ---

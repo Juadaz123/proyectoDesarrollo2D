@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private bool AreAllEnemiesDead()
+    public bool AreAllEnemiesDead()
     {
         return GameObject.FindGameObjectsWithTag("Enemy").Length == 0;
     }
@@ -126,6 +126,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var enemy in enemies)
         {
+            if(enemy != null)
             DestroyImmediate(enemy);
         }
     }

@@ -33,6 +33,8 @@ public class EnemyLifeSystem : LifeScript
         if (slimeAnimation != null)
         {
             slimeAnimation.PlayDeathAnimation();
+            //destruir y desaparecer el slime en 4 segundos
+            Destroy(gameObject, 4f);
         }
 
         if (enemyController != null)

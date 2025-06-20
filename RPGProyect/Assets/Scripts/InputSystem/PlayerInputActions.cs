@@ -135,6 +135,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ataque0 (Mover)"",
+                    ""type"": ""Button"",
+                    ""id"": ""dbe2febf-eafe-45b5-bc8b-9f8383cad6ec"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -236,6 +245,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Ataque 4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b0546d8-81d5-4283-a55e-c9eb9d35152a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ataque0 (Mover)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -319,6 +339,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Gameplay_Ataque2 = m_Gameplay.FindAction("Ataque 2", throwIfNotFound: true);
         m_Gameplay_Ataque3 = m_Gameplay.FindAction("Ataque 3", throwIfNotFound: true);
         m_Gameplay_Ataque4 = m_Gameplay.FindAction("Ataque 4", throwIfNotFound: true);
+        m_Gameplay_Ataque0Mover = m_Gameplay.FindAction("Ataque0 (Mover)", throwIfNotFound: true);
         // Movement Free
         m_MovementFree = asset.FindActionMap("Movement Free", throwIfNotFound: true);
         m_MovementFree_movimiento = m_MovementFree.FindAction("movimiento", throwIfNotFound: true);
@@ -409,6 +430,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Ataque2;
     private readonly InputAction m_Gameplay_Ataque3;
     private readonly InputAction m_Gameplay_Ataque4;
+    private readonly InputAction m_Gameplay_Ataque0Mover;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -440,6 +462,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Ataque4".
         /// </summary>
         public InputAction @Ataque4 => m_Wrapper.m_Gameplay_Ataque4;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Ataque0Mover".
+        /// </summary>
+        public InputAction @Ataque0Mover => m_Wrapper.m_Gameplay_Ataque0Mover;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -481,6 +507,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Ataque4.started += instance.OnAtaque4;
             @Ataque4.performed += instance.OnAtaque4;
             @Ataque4.canceled += instance.OnAtaque4;
+            @Ataque0Mover.started += instance.OnAtaque0Mover;
+            @Ataque0Mover.performed += instance.OnAtaque0Mover;
+            @Ataque0Mover.canceled += instance.OnAtaque0Mover;
         }
 
         /// <summary>
@@ -507,6 +536,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Ataque4.started -= instance.OnAtaque4;
             @Ataque4.performed -= instance.OnAtaque4;
             @Ataque4.canceled -= instance.OnAtaque4;
+            @Ataque0Mover.started -= instance.OnAtaque0Mover;
+            @Ataque0Mover.performed -= instance.OnAtaque0Mover;
+            @Ataque0Mover.canceled -= instance.OnAtaque0Mover;
         }
 
         /// <summary>
@@ -689,6 +721,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAtaque4(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Ataque0 (Mover)" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAtaque0Mover(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Movement Free" which allows adding and removing callbacks.
