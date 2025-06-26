@@ -12,6 +12,11 @@ public class ActionMenuUI : MonoBehaviour
     private List<Button> actionButtons = new List<Button>(); // Lista para guardar referencias a los botones creados
 
     // Método para inicializar el menú de UI y generar los botones
+    //buscar el actionMenuContainer en awake
+    private void Awake()
+    {
+        actionButtonContainer = GameObject.FindGameObjectWithTag("PanelMenu").GetComponent<Transform>();
+    }
     // Es llamado por PlayerController en su método Start()
     public void Initialize(PlayerController controller, List<PlayerController.ActionData> actions)
     {
