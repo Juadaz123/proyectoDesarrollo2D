@@ -269,7 +269,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""id"": ""212898f3-2fce-43fb-a165-999aae5974f6"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
@@ -287,7 +287,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""0a38b224-ab36-4f32-9ec3-49f869fcee0d"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press(pressPoint=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""movimiento"",

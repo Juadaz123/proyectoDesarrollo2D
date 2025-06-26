@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private MovementData defaultmovementdata; // Un MovementData por defecto si alguna acción no tiene uno propio
 
     // --- Referencias a Componentes y Scripts ---
-    private Rigidbody2D rb2D; // Componente de física para el movimiento
+    [SerializeField] private Rigidbody2D rb2D; // Componente de física para el movimiento
     private ITurnos turnos; // Interfaz para el sistema de turnos (ej. MovePlayer)
     private ControlTurnos controlTurnos; // Script principal que gestiona los turnos
     private SoldierAnimationScript soldierAnim; // Script para el control de animaciones del jugador
@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnClickPerformed(InputAction.CallbackContext context)
     {
+
         if (!context.performed) return;
         
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
@@ -205,10 +206,7 @@ public class PlayerController : MonoBehaviour
     // --- NUEVOS MÉTODOS DE INICIO/DETENCIÓN DE MOVIMIENTO LIBRE ---
     public void StartFreeMovement()
     {
-        if (controlTurnos != null)
-        {
-        controlTurnos.UpdateTurn();
-        }
+
         controlTurnos.enabled = false;
         isFreeMoving = true;
         Debug.Log("PlayerController: Iniciando movimiento libre.");
@@ -228,7 +226,7 @@ public class PlayerController : MonoBehaviour
         if (isFreeMoving)
         {
             ApplyFreeMovement();
-        }else {
+        }else if(!isFreeMoving && controlTurnos.enabled== false) {
        
             rb2D.linearVelocity = Vector2.zero;
             SetWalkingAnimation(false); // Asegurarse de detener la animación de caminar

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4077618280901587684}
+  - component: {fileID: 5842268510965439046}
   - component: {fileID: 3464062031086169809}
   - component: {fileID: 38324334417760340}
   - component: {fileID: 9170020810700699721}
@@ -39,6 +40,18 @@ Transform:
   - {fileID: 5141617406071278386}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5842268510965439046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624023130842533175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3dddb675e39a145a8c8ace5ea34725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3464062031086169809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,8 +66,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseStats: {fileID: 11400000, guid: efbaec0bb9cd4b045b6decab4a3dda63, type: 2}
   isEvationFiscal: 0
-  _collisionDamageDealerTag: EnemyDamage
-  _triggerDamageDealerTag: EnemyAttackTrigger
+  _collisionDamageDealerTag: Hazards
+  _triggerDamageDealerTag: Hazards
 --- !u!212 &38324334417760340
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -186,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b72165a69da6340bab9d56712746ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freeMovementSpeed: 5
   actions:
   - name: Mover
     movementData: {fileID: 11400000, guid: 4332ff898722b9f4cb0180192df9c908, type: 2}
@@ -214,8 +228,8 @@ MonoBehaviour:
     isHeal: 1
   arrowCount: 10
   defaultmovementdata: {fileID: 11400000, guid: 4332ff898722b9f4cb0180192df9c908, type: 2}
+  rb2D: {fileID: 0}
   _playerMeleeAttackColliderObject: {fileID: 8450266882778897523}
-  CanMove: 1
 --- !u!114 &4925038445179401813
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -48015,6 +48015,10 @@ PrefabInstance:
       value: Slime
       objectReference: {fileID: 0}
     - target: {fileID: 133682673755315122, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 133682673755315122, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -48134,6 +48138,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8198418230555956285, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -48151,6 +48159,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2434117936148987155, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3464062031086169809, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: _triggerDamageDealerTag
       value: Hazards
@@ -48162,6 +48174,10 @@ PrefabInstance:
     - target: {fileID: 3624023130842533175, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3624023130842533175, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3624023130842533175, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_IsActive
@@ -48177,7 +48193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077618280901587684, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4077618280901587684, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -48207,13 +48223,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4085043139886614840, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+      propertyPath: actions.Array.data[0].isAttack
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4925038445179401813, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: playerAttackCollider
       value: AttackArea
       objectReference: {fileID: 0}
     - target: {fileID: 8450266882778897523, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450266882778897523, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9170020810700699721, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+      propertyPath: m_BodyType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9170020810700699721, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_CollisionDetection

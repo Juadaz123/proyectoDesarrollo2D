@@ -43,7 +43,6 @@ public class PlayerInputHandler : MonoBehaviour
         playerInput.Gameplay.Ataque4.performed += ctx => playerController.SelectAction(4);
 
     // --- Suscribir métodos a los eventos del Input System para el mapa 'Movement Free' ---
-    // NO usamos ctx.ReadValue<Vector2>() para el botón.
     // En su lugar, usaremos el evento 'started' y 'canceled' para el movimiento libre.
     playerInput.MovementFree.movimiento.started += ctx => playerController.StartFreeMovement();
     playerInput.MovementFree.movimiento.canceled += ctx => playerController.StopFreeMovement();
@@ -83,6 +82,13 @@ public class PlayerInputHandler : MonoBehaviour
             // Si no hay enemigos y no estamos ya en modo de movimiento libre
             if (!inFreeMovementMode)
             {
+                ControlTurnos controlTurnos = FindFirstObjectByType<ControlTurnos>();
+                 if (controlTurnos != null && controlTurnos.enabled)
+                {
+                controlTurnos.UpdateTurn();
+                controlTurnos.enabled = false;
+                }
+                
                 playerController.StopFreeMovement();
                 playerInput.Gameplay.Disable(); // Deshabilita el mapa de juego
                 playerInput.MovementFree.Enable(); // Habilita el mapa de movimiento libre
@@ -92,6 +98,11 @@ public class PlayerInputHandler : MonoBehaviour
         }
         else if (inFreeMovementMode)
         {
+            //activar de nuevo sistema de turnos
+            ControlTurnos controlTurnos = FindFirstObjectByType<ControlTurnos>();
+            controlTurnos.enabled = true;
+            controlTurnos.EndTurn();
+
             playerInput.MovementFree.Disable(); // Deshabilita el mapa de movimiento libre
             playerInput.Gameplay.Enable(); // Habilita el mapa de juego
             Debug.Log("Cambiando a modo de juego: Hay enemigos presentes.");
