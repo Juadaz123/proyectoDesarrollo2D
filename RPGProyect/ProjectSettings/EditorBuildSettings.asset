@@ -138,5 +138,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Floor6/Floor6_g.unity
     guid: 740c0745b07ba944fac0a8862aadab59
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 5f2dad621833e9346800843ecc7bed64, type: 3}
   m_UseUCBPForAssetBundles: 0

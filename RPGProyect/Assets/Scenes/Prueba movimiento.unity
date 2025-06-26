@@ -414,6 +414,7 @@ GameObject:
   - component: {fileID: 329207853}
   - component: {fileID: 329207852}
   - component: {fileID: 329207855}
+  - component: {fileID: 329207856}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -539,6 +540,21 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &329207856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329207851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1725b3e91b2a3842850aede9ba2063f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 811429595}
+  smoothSpeed: 5
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &349386297
 GameObject:
   m_ObjectHideFlags: 0
@@ -4406,6 +4422,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732391971}
   m_CullTransparentMesh: 1
+--- !u!1 &811429594 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3624023130842533175, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+  m_PrefabInstance: {fileID: 8249532667525077620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &811429595 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4077618280901587684, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+  m_PrefabInstance: {fileID: 8249532667525077620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &811429603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811429594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3dddb675e39a145a8c8ace5ea34725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1103495178
 GameObject:
   m_ObjectHideFlags: 0
@@ -47977,8 +48015,12 @@ PrefabInstance:
       value: Slime
       objectReference: {fileID: 0}
     - target: {fileID: 133682673755315122, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 133682673755315122, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 392803773986266404, guid: 0c7d6b2776363a647b446581662d0bcb, type: 3}
       propertyPath: _triggerDamageDealerTag
@@ -48121,13 +48163,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3624023130842533175, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4077618280901587684, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.97
+      value: -8.59
       objectReference: {fileID: 0}
     - target: {fileID: 4077618280901587684, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.72
+      value: 0.94
       objectReference: {fileID: 0}
     - target: {fileID: 4077618280901587684, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -48169,10 +48215,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9170020810700699721, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3624023130842533175, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 811429603}
   m_SourcePrefab: {fileID: 100100000, guid: de55ea8d9f8c6024a84cc25d38215b3d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

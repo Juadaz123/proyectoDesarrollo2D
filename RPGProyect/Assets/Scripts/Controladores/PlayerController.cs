@@ -6,6 +6,8 @@ using UnityEngine.InputSystem; // Importar el nuevo Input System
 public class PlayerController : MonoBehaviour
 {
     // --- Variables de Configuración (visibles en el Inspector) ---
+    [Header("Variables de uso y control Player")]
+    [SerializeField] private float freeMovementSpeed = 5f;
     [SerializeField] private List<ActionData> actions = new List<ActionData>(); // Lista de acciones con datos
     [SerializeField] private int arrowCount = 10; // Número de flechas disponibles
     [SerializeField] private MovementData defaultmovementdata; // Un MovementData por defecto si alguna acción no tiene uno propio
@@ -25,7 +27,8 @@ public class PlayerController : MonoBehaviour
 
     // --- Variables de Estado ---
     private int currentActionIndex = 0; // Índice de la acción seleccionada actualmente
-    public bool CanMove = true; // Permite o restringe el movimiento (considera si es necesaria con el sistema de turnos)
+    //variable bool para el uso de MovementFree
+    private bool isFreeMoving = false;
 
     // --- Estructura para almacenar los datos de cada acción (¡Única definición!) ---
     [System.Serializable]
@@ -198,9 +201,79 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.1f); 
     }
 
+
+    // --- NUEVOS MÉTODOS DE INICIO/DETENCIÓN DE MOVIMIENTO LIBRE ---
+    public void StartFreeMovement()
+    {
+        if (controlTurnos != null)
+        {
+        controlTurnos.UpdateTurn();
+        }
+        controlTurnos.enabled = false;
+        isFreeMoving = true;
+        Debug.Log("PlayerController: Iniciando movimiento libre.");
+    }
+    
+
+    public void StopFreeMovement()
+    {
+        isFreeMoving = false;
+        rb2D.linearVelocity = Vector2.zero; // Asegurarse de detener el movimiento
+        SetWalkingAnimation(false); // Detener la animación
+        Debug.Log("PlayerController: Deteniendo movimiento libre.");
+    }
+
+    private void FixedUpdate() 
+    {
+        if (isFreeMoving)
+        {
+            ApplyFreeMovement();
+        }else {
+       
+            rb2D.linearVelocity = Vector2.zero;
+            SetWalkingAnimation(false); // Asegurarse de detener la animación de caminar
+        }
+    }
+
+    private void ApplyFreeMovement()
+    {
+
+        Vector2 directionToMouse = GetDirectionToMouse();
+
+        // 3. Mover el Rigidbody2D hacia el mouse
+        rb2D.linearVelocity = directionToMouse * freeMovementSpeed;
+
+        // 4. Rotar el personaje para que mire hacia la dirección del mouse
+        if (soldierAnim != null)
+        {
+            soldierAnim.RotatePlayer(directionToMouse);
+        }
+
+        // 5. Activar la animación de caminar
+        SetWalkingAnimation(true);
+    }
+
+//btener direccion del mouse (usado por free movement y controlFlechas)
+    public Vector2 GetDirectionToMouse()
+    {
+        // 1. Obtener la posición del mouse en el mundo
+        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        mouseWorldPosition.z = transform.position.z; // Mantener la misma Z que el jugador
+
+        // 2. Calcular la dirección desde el jugador hacia el mouse
+        return ((Vector2)(mouseWorldPosition - transform.position).normalized);
+    }
+
+    public void HandleInteraction()
+    {
+        Debug.Log("PlayerController: Manejando interacción (botón derecho del ratón en modo libre).");
+        // Aquí podrías lanzar un raycast, activar un UI, etc.
+    }
+
     private IEnumerator ResetAttackAnimation(float cooldown)
     {
-        yield return new WaitForSeconds(cooldown); 
+        yield return new WaitForSeconds(cooldown);
         soldierAnim.ResetAllActionAnimations();
     }
 

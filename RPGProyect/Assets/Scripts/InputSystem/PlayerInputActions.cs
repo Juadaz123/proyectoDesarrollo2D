@@ -93,7 +93,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Mover"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""362dd505-f365-4e9c-a3f7-4f71817d31db"",
                     ""expectedControlType"": """",
                     ""processors"": """",
@@ -270,7 +270,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""interactuar"",
@@ -287,7 +287,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""0a38b224-ab36-4f32-9ec3-49f869fcee0d"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": ""Press(pressPoint=2)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""movimiento"",
