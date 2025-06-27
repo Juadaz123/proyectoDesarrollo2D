@@ -54,7 +54,10 @@ public class TimeController : MonoBehaviour
         {
             StopTime(); // No es el turno del jugador, tiempo lento
         }
-       
+        if (turnController.enabled == false)
+        {
+            PlayTime();
+        }
         
 
     }
