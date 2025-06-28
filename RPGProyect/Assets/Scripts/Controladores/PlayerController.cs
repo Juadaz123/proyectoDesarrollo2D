@@ -167,6 +167,7 @@ public class PlayerController : MonoBehaviour
             if (arrowCount <= 0)
             {
                 Debug.Log("¡No hay flechas disponibles para el ataque de arco!");
+                controlTurnos.EndTurn();
                 return;
             }
             else

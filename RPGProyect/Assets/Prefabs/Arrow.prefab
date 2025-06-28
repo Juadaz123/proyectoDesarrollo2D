@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3129792500461817578}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.05, y: 2.45, z: 0}
+  m_LocalPosition: {x: -10.05, y: 2.45, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e8bdbeac4e53f4d86bc3c25dc79b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targettag: 
+  targettag: 3232
   shootforce: 10
   waitedTime: 0
   lifetime: 0

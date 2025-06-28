@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 1222466727480189461}
   - component: {fileID: 661515670170733}
   - component: {fileID: 3913570575983425314}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MainEliteOgre
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -206,7 +206,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
   enemyRb2D: {fileID: 0}
-  enemyActions: []
+  enemyActions:
+  - name: Mover
+    behaviorType: 0
+    movementData: {fileID: 11400000, guid: 36af6d3b486883145ab19a4ed5192d96, type: 2}
+  - name: atacar
+    behaviorType: 1
+    movementData: {fileID: 11400000, guid: c25a643a69b0c9c4a919ad71adb9783e, type: 2}
 --- !u!1 &2500641199267001364
 GameObject:
   m_ObjectHideFlags: 0

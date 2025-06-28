@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxLife: 10
   Defense: 1
-  Evasion: 0.1
+  Evasion: 0.2
