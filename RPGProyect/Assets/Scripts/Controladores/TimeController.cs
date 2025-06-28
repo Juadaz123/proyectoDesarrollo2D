@@ -58,8 +58,6 @@ public class TimeController : MonoBehaviour
         {
             PlayTime();
         }
-       
-       
         
 
     }
