@@ -44,7 +44,7 @@ public class TimeController : MonoBehaviour
 
     void Update()
     {
-       Time.timeScale = _time;
+        Time.timeScale = _time;
         // Controla la escala de tiempo basándose en el turno del jugador
         if (turnController != null && turnController.IsMyTurn)
         {
@@ -54,6 +54,11 @@ public class TimeController : MonoBehaviour
         {
             StopTime(); // No es el turno del jugador, tiempo lento
         }
+        if (turnController.enabled == false)
+        {
+            PlayTime();
+        }
+       
        
         
 

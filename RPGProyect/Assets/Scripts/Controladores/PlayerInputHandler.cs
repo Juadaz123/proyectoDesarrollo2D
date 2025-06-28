@@ -85,7 +85,6 @@ public class PlayerInputHandler : MonoBehaviour
                 ControlTurnos controlTurnos = FindFirstObjectByType<ControlTurnos>();
                  if (controlTurnos != null && controlTurnos.enabled)
                 {
-                controlTurnos.UpdateTurn();
                 controlTurnos.enabled = false;
                 }
                 

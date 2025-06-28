@@ -30,6 +30,15 @@ public class PlayerController : MonoBehaviour
     //variable bool para el uso de MovementFree
     private bool isFreeMoving = false;
 
+    // --- NUEVA VARIABLE PARA EL CONTROL DE CLICS ---
+    private bool _canPerformAction = true; // Controla si el jugador puede realizar una acción en este momento
+
+
+    [Header("Configuración de Proyectiles")]
+    [SerializeField] private LaucherBehaviour laucher;
+    [SerializeField] private float projectileLaunchForce = 20f;
+
+
     // --- Estructura para almacenar los datos de cada acción (¡Única definición!) ---
     [System.Serializable]
     public class ActionData
@@ -48,15 +57,21 @@ public class PlayerController : MonoBehaviour
     // --- Métodos de Ciclo de Vida de Unity ---
     private void Start()
     {
+        laucher = GetComponent<LaucherBehaviour>();
         rb2D = GetComponent<Rigidbody2D>(); // Obtener referencia al Rigidbody2D en este GameObject
 
-        controlTurnos = FindFirstObjectByType<ControlTurnos>(); 
+        controlTurnos = FindFirstObjectByType<ControlTurnos>();
         if (controlTurnos == null)
         {
             Debug.LogError("PlayerController: No se encontró el ControlTurnos!");
         }
+        else
+        {
+            // Suscribirse al evento de fin de turno del ControlTurnos
+            controlTurnos.OnTurnEnded += OnTurnEndedHandler; //
+        }
 
-        turnos = new MovePlayer(controlTurnos); 
+        turnos = new MovePlayer(controlTurnos);
 
         soldierAnim = GetComponent<SoldierAnimationScript>();
         if (soldierAnim == null)
@@ -71,7 +86,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            actionMenuUI.Initialize(this, actions); 
+            actionMenuUI.Initialize(this, actions);
         }
 
         // --- NUEVO: Obtener la referencia al DamageDealer del collider de ataque ---
@@ -91,16 +106,37 @@ public class PlayerController : MonoBehaviour
         SelectAction(0); // Seleccionar la primera acción por defecto al inicio del juego
     }
 
+    // Asegúrate de desuscribirte para evitar memory leaks
+    private void OnDestroy()
+    {
+        if (controlTurnos != null)
+        {
+            controlTurnos.OnTurnEnded -= OnTurnEndedHandler; //
+        }
+    }
+
+    // Manejador del evento de fin de turno
+    private void OnTurnEndedHandler() //
+    {
+        _canPerformAction = true; // El turno ha terminado, el jugador puede volver a hacer una acción en su siguiente turno
+        Debug.Log("PlayerController: Turno finalizado. Habilitando acción."); //
+    }
+
+
     // --- Métodos de Entrada y Lógica de Acciones ---
 
     public void OnClickPerformed(InputAction.CallbackContext context)
     {
+        // --- Solución 1: Bloqueo por bandera booleana ---
+        if (!context.performed || !_canPerformAction) //
+        {
+            Debug.Log("PlayerController: No se puede realizar una acción en este momento (Cooldown o no es tu turno)."); //
+            return; //
+        }
 
-        if (!context.performed) return;
-        
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-        mouseWorldPosition.z = transform.position.z; 
+        mouseWorldPosition.z = transform.position.z;
         Vector2 directionToMouse = (mouseWorldPosition - transform.position).normalized;
 
         if (soldierAnim != null)
@@ -111,10 +147,10 @@ public class PlayerController : MonoBehaviour
         if (!controlTurnos.IsMyTurn)
         {
             controlTurnos.UpdateTurn();
-        }        
+        }
         if (controlTurnos == null || !controlTurnos.IsMyTurn)
         {
-            return; 
+            return;
         }
 
         ActionData selectedAction = actions[currentActionIndex];
@@ -128,29 +164,42 @@ public class PlayerController : MonoBehaviour
 
         if (selectedAction.isAttack && selectedAction.attackAnimationIndex == 3) // Si es un ataque de arco
         {
-            if (arrowCount <= 0) 
+            if (arrowCount <= 0)
             {
                 Debug.Log("¡No hay flechas disponibles para el ataque de arco!");
-                return; 
+                return;
             }
             else
             {
-                arrowCount--; 
+                arrowCount--;
                 Debug.Log($"Flechas restantes: {arrowCount}");
+
+                if (laucher != null)
+                {
+                    laucher.InstanciarNuevoObjeto();
+                }
+                else
+                {
+                    Debug.LogError("ProjectilePooler no está asignado. No se pueden lanzar flechas.");
+                }
             }
         }
-        
+
+        // --- Establecer la bandera a false antes de iniciar la acción ---
+        _canPerformAction = false; //
+        Debug.Log("PlayerController: Iniciando acción. Bloqueando clics adicionales."); //
+
         // --- ¡Aquí es donde iniciamos la corrutina principal de la acción! ---
-        StartCoroutine(PerformActionCoroutine(selectedAction, dataToUse)); 
+        StartCoroutine(PerformActionCoroutine(selectedAction, dataToUse));
     }
 
     public void SelectAction(int index)
     {
         if (index >= 0 && index < actions.Count)
         {
-            currentActionIndex = index; 
-            Debug.Log($"Acción seleccionada: {actions[currentActionIndex].name}"); 
-            
+            currentActionIndex = index;
+            Debug.Log($"Acción seleccionada: {actions[currentActionIndex].name}");
+
             if (actionMenuUI != null)
             {
                 actionMenuUI.HighlightButton(currentActionIndex);
@@ -165,9 +214,9 @@ public class PlayerController : MonoBehaviour
     // --- Corrutina Principal para la Ejecución de Acciones ---
     private IEnumerator PerformActionCoroutine(ActionData actionToPerform, MovementData dataToUse)
     {
-        Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); 
-        Vector2 direction = mouseWorld - (Vector2)rb2D.position; 
-        
+        Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 direction = mouseWorld - (Vector2)rb2D.position;
+
         // Asumiendo que turnos.Turno() maneja el movimiento/animación de la acción
         turnos.Turno(direction, rb2D, dataToUse, this);
 
@@ -184,7 +233,7 @@ public class PlayerController : MonoBehaviour
 
             soldierAnim.PlayAttackAnimation(true, actionToPerform.attackAnimationIndex);
             yield return StartCoroutine(ResetAttackAnimation(dataToUse.cooldown));
-            
+
             // Si tu lógica de desactivación ya funciona, no necesitas _playerMeleeDamageDealer.DisableCollider() aquí.
             // Esta línea asume que otro sistema (ej. Animation Events) desactivará el collider.
         }
@@ -198,8 +247,11 @@ public class PlayerController : MonoBehaviour
             soldierAnim.PlayHealAnimation(true);
             yield return StartCoroutine(ResetAttackAnimation(dataToUse.cooldown));
         }
-        
-        yield return new WaitForSeconds(0.1f); 
+
+        yield return new WaitForSeconds(0.1f);
+        // --- Al finalizar la corrutina de la acción, el turno debería finalizar si todo salió bien. ---
+        // controlTurnos.EndTurn(); // Esto es importante para que el sistema de turnos avance y se reactive _canPerformAction en el siguiente turno.
+        // El restablecimiento de _canPerformAction ahora se maneja en el evento OnTurnEndedHandler
     }
 
 
@@ -211,7 +263,7 @@ public class PlayerController : MonoBehaviour
         isFreeMoving = true;
         Debug.Log("PlayerController: Iniciando movimiento libre.");
     }
-    
+
 
     public void StopFreeMovement()
     {
@@ -221,13 +273,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log("PlayerController: Deteniendo movimiento libre.");
     }
 
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
         if (isFreeMoving)
         {
             ApplyFreeMovement();
         }else if(!isFreeMoving && controlTurnos.enabled== false) {
-       
+
             rb2D.linearVelocity = Vector2.zero;
             SetWalkingAnimation(false); // Asegurarse de detener la animación de caminar
         }
@@ -252,7 +304,7 @@ public class PlayerController : MonoBehaviour
     }
 
 //btener direccion del mouse (usado por free movement y controlFlechas)
-    public Vector2 GetDirectionToMouse()
+    public Vector3 GetDirectionToMouse()
     {
         // 1. Obtener la posición del mouse en el mundo
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
@@ -260,7 +312,7 @@ public class PlayerController : MonoBehaviour
         mouseWorldPosition.z = transform.position.z; // Mantener la misma Z que el jugador
 
         // 2. Calcular la dirección desde el jugador hacia el mouse
-        return ((Vector2)(mouseWorldPosition - transform.position).normalized);
+        return ((mouseWorldPosition - transform.position).normalized);
     }
 
     public void HandleInteraction()
@@ -282,6 +334,6 @@ public class PlayerController : MonoBehaviour
 
     public bool IsPlayerStopped()
     {
-        return rb2D.linearVelocity.sqrMagnitude < 0.01f; 
+        return rb2D.linearVelocity.sqrMagnitude < 0.01f;
     }
 }

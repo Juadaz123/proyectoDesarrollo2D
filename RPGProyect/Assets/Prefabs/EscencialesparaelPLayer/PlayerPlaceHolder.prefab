@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4077618280901587684}
   - component: {fileID: 5842268510965439046}
+  - component: {fileID: 986846990343978444}
   - component: {fileID: 3464062031086169809}
   - component: {fileID: 38324334417760340}
   - component: {fileID: 9170020810700699721}
@@ -17,7 +18,7 @@ GameObject:
   - component: {fileID: 4085043139886614840}
   - component: {fileID: 4925038445179401813}
   - component: {fileID: 713941240803912330}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerPlaceHolder
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -52,6 +53,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da3dddb675e39a145a8c8ace5ea34725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &986846990343978444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624023130842533175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc8dabdf88c048418732db3a114c774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 3129792500461817578, guid: a2efdfe8b58d40146b930e195b38fb5d, type: 3}
+  poolSize: 5
 --- !u!114 &3464062031086169809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +245,8 @@ MonoBehaviour:
   defaultmovementdata: {fileID: 11400000, guid: 4332ff898722b9f4cb0180192df9c908, type: 2}
   rb2D: {fileID: 0}
   _playerMeleeAttackColliderObject: {fileID: 8450266882778897523}
+  projectilePooler: {fileID: 0}
+  projectileLaunchForce: 20
 --- !u!114 &4925038445179401813
 MonoBehaviour:
   m_ObjectHideFlags: 0
