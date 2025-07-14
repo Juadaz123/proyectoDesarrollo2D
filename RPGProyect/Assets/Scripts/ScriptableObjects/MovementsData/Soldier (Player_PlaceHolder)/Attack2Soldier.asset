@@ -17,4 +17,4 @@ MonoBehaviour:
   attackForce: 2
   damageAmount: 3
   damageType: {fileID: 11400000, guid: 7102014e8661e184da0013e8cfd25e7f, type: 2}
-  actionicon: {fileID: 4949258004858939775, guid: a0be0d19af0c5ce45977904c9a9bffed, type: 3}
+  actionicon: {fileID: 8152592829446542042, guid: a0be0d19af0c5ce45977904c9a9bffed, type: 3}

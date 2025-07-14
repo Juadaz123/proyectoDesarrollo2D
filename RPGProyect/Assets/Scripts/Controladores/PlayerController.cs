@@ -218,6 +218,13 @@ public class PlayerController : MonoBehaviour
         Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 direction = mouseWorld - (Vector2)rb2D.position;
 
+        Debug.Log($"Acción seleccionada: {actionToPerform.name}, isAttack: {actionToPerform.isAttack}, isHeal: {actionToPerform.isHeal}");
+
+        if (!actionToPerform.isAttack)
+        {
+            SetWalkingAnimation(true);
+        }
+
         // Asumiendo que turnos.Turno() maneja el movimiento/animación de la acción
         turnos.Turno(direction, rb2D, dataToUse, this);
 
@@ -331,6 +338,7 @@ public class PlayerController : MonoBehaviour
     public void SetWalkingAnimation(bool isWalking)
     {
         soldierAnim.SetWalkingAnimation(isWalking);
+        Debug.Log(isWalking);
     }
 
     public bool IsPlayerStopped()

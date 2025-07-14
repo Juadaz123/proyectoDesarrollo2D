@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ActionMenuUI : MonoBehaviour
 {
@@ -40,10 +41,10 @@ public class ActionMenuUI : MonoBehaviour
             GameObject buttonGO = Instantiate(actionButtonPrefab, actionButtonContainer);
             Button button = buttonGO.GetComponent<Button>();
  
-            // --- ACCESO A LOS HIJOS DEL BOTÓN INSTANCIADO ---
+            // --- ACCESO A LOS NIETOS DEL BOTÓN INSTANCIADO ---
             // 1. Obtener la referencia al componente Image del hijo "MoveIcon"
             Image actionIconImage = null;
-            Transform iconChild = buttonGO.transform.Find("MoveIcon"); // Busca un hijo llamado "ActionIcon"
+            Transform iconChild = buttonGO.transform.GetChild(0).GetChild(0); // Busca al nieto del primer hijo del boton llamado "MoveIcon"
             if (iconChild != null)
             {
                 actionIconImage = iconChild.GetComponent<Image>();
@@ -54,11 +55,11 @@ public class ActionMenuUI : MonoBehaviour
             }
 
             // 2. Obtener la referencia al componente Text del hijo para el nombre
-            Text buttonText = null;
-            Transform textChild = buttonGO.transform.Find("NameAccionText"); // Busca un hijo llamado "NombreAccionText"
+            TextMeshProUGUI buttonText = null;
+            Transform textChild = buttonGO.transform.GetChild(1).GetChild(0); // Busca al nieto del segundo hijo del boton llamado "AccionName"
             if (textChild != null)
             {
-                buttonText = textChild.GetComponent<Text>();
+                buttonText = textChild.GetComponent<TextMeshProUGUI>();
             }
             else
             {
@@ -97,14 +98,21 @@ public class ActionMenuUI : MonoBehaviour
         {
             if (actionButtons[i] != null)
             {
-                // Ejemplo simple: cambiar el color del botón para resaltar
-                if (i == selectedIndex)
+                CanvasGroup cg = actionButtons[i].GetComponent<CanvasGroup>();
+                if (cg != null)
                 {
-                    actionButtons[i].image.color = Color.black; // Color de resaltado
+                    if (i == selectedIndex)
+                    {
+                        cg.alpha = 1f; // Boton seleccionado
+                    }
+                    else
+                    {
+                        cg.alpha = 0.7f; // Botones no seleccionados
+                    }
                 }
                 else
                 {
-                    actionButtons[i].image.color = Color.white; // Color normal
+                    Debug.LogWarning("No se encontró CanvasGroup en el botón instanciado.");
                 }
             }
         }

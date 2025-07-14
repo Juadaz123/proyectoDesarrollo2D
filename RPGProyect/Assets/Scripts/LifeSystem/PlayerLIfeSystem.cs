@@ -70,6 +70,7 @@ public class PlayerLIfeSystem : LifeScript
         {
             soldierAnimation.RecibeDamage();
         }
+        UIManager.Instance.ActualizarVidaJugador(CurrentLife, MaxLife); // Modifiacion de los corazones del UI
 
         if (CurrentLife <= 0)
         {
