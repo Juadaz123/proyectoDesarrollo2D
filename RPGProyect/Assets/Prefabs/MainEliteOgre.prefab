@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7349920397355076909}
   - component: {fileID: 4501339712079608121}
   - component: {fileID: 1222466727480189461}
+  - component: {fileID: 8716298350478411532}
   - component: {fileID: 661515670170733}
   - component: {fileID: 3913570575983425314}
   m_Layer: 7
@@ -162,9 +163,25 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.02291447, y: 0.018331587}
-  m_Size: {x: 1.7741762, y: 1.7741762}
+  m_Offset: {x: -0.33, y: 0}
+  m_Size: {x: 1, y: 1.7}
   m_Direction: 0
+--- !u!114 &8716298350478411532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760779370548450447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca691293dd44f14ba2cb01cc5ed9076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseStats: {fileID: 11400000, guid: 8af1ccd66668e4a419331c50b4b8a17f, type: 2}
+  isEvationFiscal: 0
+  _collisionDamageDealerTag: PlayerAttack
+  _triggerDamageDealerTag: PlayerAttack
 --- !u!50 &661515670170733
 Rigidbody2D:
   serializedVersion: 5
@@ -213,6 +230,9 @@ MonoBehaviour:
   - name: atacar
     behaviorType: 1
     movementData: {fileID: 11400000, guid: c25a643a69b0c9c4a919ad71adb9783e, type: 2}
+  - name: atacar
+    behaviorType: 3
+    movementData: {fileID: 11400000, guid: c25a643a69b0c9c4a919ad71adb9783e, type: 2}
 --- !u!1 &2500641199267001364
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +260,7 @@ Transform:
   m_GameObject: {fileID: 2500641199267001364}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.532, y: 0.295, z: -1}
+  m_LocalPosition: {x: 0.532, y: 0.031, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -276,12 +296,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Size: {x: 0.71, y: 1.41}
   m_Direction: 0
 --- !u!114 &6182419852170671870
 MonoBehaviour:

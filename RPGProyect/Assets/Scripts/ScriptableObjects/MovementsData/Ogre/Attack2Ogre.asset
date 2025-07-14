@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595f334ec8c89ec41a6af3d57c3dc2a3, type: 3}
+  m_Name: Attack2Ogre
+  m_EditorClassIdentifier: 
+  shootForce: 6
+  cooldown: 2
+  attackForce: 1
+  damageAmount: 8
+  damageType: {fileID: 11400000, guid: 80451246dcd24e74c97183867eecf332, type: 2}
+  actionicon: {fileID: 0}

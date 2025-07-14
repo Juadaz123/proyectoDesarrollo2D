@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce10c7dc6bc706e40a3c1f0d4aa7a15d, type: 3}
-  m_Name: PhysicalDamage
+  m_Name: Orc
   m_EditorClassIdentifier: 
-  _name: picos
-  _armorPenetration: 0
+  _name: Orc
+  _armorPenetration: 10

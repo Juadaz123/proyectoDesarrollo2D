@@ -312,5 +312,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageAmount: 7
-  _damageType: {fileID: 11400000, guid: 7102014e8661e184da0013e8cfd25e7f, type: 2}
+  _damageType: {fileID: 11400000, guid: a1a2749d8b4d63b40a5a026a7eda6b8b, type: 2}
   _destroyOnHit: 0
