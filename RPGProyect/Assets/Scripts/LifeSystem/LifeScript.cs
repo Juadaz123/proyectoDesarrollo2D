@@ -1,10 +1,13 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class LifeScript : MonoBehaviour, ILifeSystem
 {
     [Header("Estadísticas del Personaje")]
     [Tooltip("Referencia al ScriptableObject que define las estadísticas base de este personaje.")]
     [SerializeField] protected CharacterStats _baseStats;
+
+    [SerializeField] protected bool usaBarraVida = false;
+    [SerializeField] protected Image lifeBarImage;
 
     // Propiedades de la interfaz ILifeSystem
     // CurrentLife ahora tiene un setter protegido para que las clases derivadas puedan modificarlo internamente
@@ -42,6 +45,11 @@ public class LifeScript : MonoBehaviour, ILifeSystem
 
         CurrentLife -= finalDamage;
         CurrentLife = Mathf.Max(0, CurrentLife);
+
+        if (usaBarraVida && lifeBarImage != null)
+        {
+            lifeBarImage.fillAmount = CurrentLife / MaxLife;
+        }
 
         Debug.Log($"{gameObject.name} recibió {finalDamage:F2} de daño ({damageType.Name} tipo). Vida restante: {CurrentLife:F2}");
 

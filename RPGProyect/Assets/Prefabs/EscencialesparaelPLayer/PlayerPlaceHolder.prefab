@@ -80,6 +80,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseStats: {fileID: 11400000, guid: efbaec0bb9cd4b045b6decab4a3dda63, type: 2}
+  usaBarraVida: 0
+  lifeBarImage: {fileID: 0}
   isEvationFiscal: 0
   _collisionDamageDealerTag: Hazards
   _triggerDamageDealerTag: Hazards
@@ -126,7 +128,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -7978735674136817684, guid: 1ad737411d9065d4484f335cf0582f5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
