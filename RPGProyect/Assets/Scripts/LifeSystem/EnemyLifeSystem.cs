@@ -1,5 +1,6 @@
+using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class EnemyLifeSystem : LifeScript
 {
     [Header("Configuración del Enemigo")]
@@ -34,13 +35,15 @@ public class EnemyLifeSystem : LifeScript
         {
             slimeAnimation.PlayDeathAnimation();
             //destruir y desaparecer el slime en 4 segundos
-            Destroy(gameObject, 4f);
+            //Destroy(gameObject, 4f);
         }
 
         if (enemyController != null)
         {
             enemyController.enabled = false;
         }
+
+        StartCoroutine(FadeAndDestroy());
     }
 
     // Para colisiones "físicas" (non-trigger), como balas del jugador
@@ -115,5 +118,48 @@ public class EnemyLifeSystem : LifeScript
             return slimeAnimation.IsDeathActive();
         }
         return false;
+    }
+
+
+    private IEnumerator FadeAndDestroy()
+    {
+        float duration = 2f;
+        float elapsed = 0f;
+
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        Color originalColor = sprite.color;
+
+        // Obtenemos el CanvasGroup del hijo (por ejemplo, para la barra de vida del enemigo)
+        CanvasGroup canvasGroup = GetComponentInChildren<CanvasGroup>();
+
+        while (elapsed < duration)
+        {
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+
+            if (sprite != null)
+            {
+                sprite.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            }
+
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = alpha;
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (sprite != null)
+        {
+            sprite.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        }
+
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 0f;
+        }
+
+        Destroy(gameObject);
     }
 }
