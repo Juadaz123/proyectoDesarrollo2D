@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,8 +15,15 @@ public class EnemySpawner : MonoBehaviour
         public int enemiesPerWave;
         public float spawnDelay = 0.5f;
         public GameObject doorTriggerArea;
+
+        [Header("Optional Reward Drop")]
+        public GameObject dropPrefab;
+        public Transform dropLocationOverride; 
+
         [HideInInspector] public int currentWave = 0;
+        [HideInInspector] public bool rewardDropped = false;
     }
+
 
     public List<TilemapSpawnConfig> spawnConfigs;
     public bool startAutomatically = false;
@@ -127,7 +134,7 @@ public class EnemySpawner : MonoBehaviour
         return positions;
     }
 
-    // ?? NEW: Destroy all active enemies
+    //Destroy all active enemies
     public void DestroyAllEnemies()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -145,11 +152,13 @@ public class EnemySpawner : MonoBehaviour
         foreach (var config in spawnConfigs)
         {
             config.currentWave = 0;
+            config.rewardDropped = false;
         }
-        Debug.Log("[Spawner] Waves reset.");
+        Debug.Log("[Spawner] Waves and reward drop states reset.");
     }
 
-    // ?? NEW: Spawn the next wave for a specific config
+
+    //Spawn the next wave for a specific config
     public void SpawnNextWaveForConfig(TilemapSpawnConfig config)
     {
         if (config.currentWave < config.totalWaves)
@@ -158,13 +167,35 @@ public class EnemySpawner : MonoBehaviour
             config.currentWave++;
             Debug.Log($"[Spawner] Spawned wave {config.currentWave}/{config.totalWaves} for {config.name}");
         }
+        else if (!config.rewardDropped && config.dropPrefab != null)
+        {
+            Vector3 dropPosition;
+
+            if (config.dropLocationOverride != null)
+            {
+                dropPosition = config.dropLocationOverride.position;
+            }
+            else if (config.spawnTilemap != null)
+            {
+                dropPosition = config.spawnTilemap.localBounds.center;
+            }
+            else
+            {
+                dropPosition = Vector3.zero;
+            }
+
+            Instantiate(config.dropPrefab, dropPosition, Quaternion.identity);
+            config.rewardDropped = true;
+            Debug.Log($"[Spawner] Dropped reward prefab for {config.name}");
+        }
         else
         {
-            Debug.Log($"[Spawner] All waves already spawned for {config.name}");
+            Debug.Log($"[Spawner] All waves completed for {config.name} (No drop or already dropped)");
         }
     }
 
-    // ?? NEW: Get a config by its assigned door trigger object
+
+    //Get a config by its assigned door trigger object
     public TilemapSpawnConfig GetConfigByDoor(GameObject doorTrigger)
     {
         foreach (var config in spawnConfigs)
