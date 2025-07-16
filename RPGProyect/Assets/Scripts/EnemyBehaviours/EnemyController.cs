@@ -1,5 +1,6 @@
-// EnemyController.cs - CORREGIDO Y CON ANIMACIONES
+// EnemyController.cs - CLASE BASE
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,17 +8,17 @@ public class EnemyController : MonoBehaviour
 {
     // --- Variables de Configuración ---
     public Transform playerTransform;
-    [SerializeField] private Rigidbody2D enemyRb2D;
+    [SerializeField] protected Rigidbody2D enemyRb2D;
 
     [Tooltip("Lista de posibles acciones/comportamientos para el enemigo.")]
-    [SerializeField] private List<EnemyActionEntry> enemyActions = new List<EnemyActionEntry>();
+    [SerializeField] protected List<EnemyActionEntry> enemyActions = new List<EnemyActionEntry>();
 
     // --- Referencias de Comportamiento ---
-    private ITurnos currentEnemyBehaviour;
-    private int currentActionIndex;
+    protected ITurnos currentEnemyBehaviour;
+    protected int currentActionIndex;
 
-    // --- ¡NUEVO! Referencia a SlimeAnimation ---
-    private SlimeAnimation slimeAnimation;
+    // --- Referencia a SlimeAnimation (protegida para acceso por clases derivadas) ---
+    protected SlimeAnimation slimeAnimation;
 
     // --- Enumerador para tipos de comportamiento (para el Inspector) ---
     public enum BehaviorType
@@ -37,10 +38,17 @@ public class EnemyController : MonoBehaviour
         public MovementData movementData; // Asumo que MovementData es una clase/struct definida en otro lugar.
     }
 
-    private bool canPerformAction = true;
+    protected bool canPerformAction = true;
 
     // --- Métodos de Ciclo de Vida de Unity ---
     void Start()
+    {
+        InitializeController();
+        PickRandomBehavior();
+    }
+
+    // Método de inicialización separado para que las clases derivadas puedan llamarlo si es necesario
+    protected virtual void InitializeController()
     {
         if (enemyRb2D == null)
         {
@@ -53,23 +61,19 @@ public class EnemyController : MonoBehaviour
             else Debug.LogError("EnemyController: Player no encontrado y no asignado!");
         }
 
-        // --- ¡NUEVO! Obtener la referencia a SlimeAnimation ---
         slimeAnimation = GetComponent<SlimeAnimation>();
         if (slimeAnimation == null)
         {
             Debug.LogError("EnemyController: No se encontró el componente SlimeAnimation en este GameObject.");
         }
-
-        PickRandomBehavior();
     }
 
-    private void Update() 
+
+    protected virtual void Update()
     {
-        // Solo llamamos Turno si podemos realizar una acción y el comportamiento existe
         if (currentEnemyBehaviour != null && enemyActions.Count > 0 && canPerformAction)
         {
-            canPerformAction = false; // Desactivamos el permiso para la siguiente acción
-            // El 'context' pasado a Turno es el propio EnemyController
+            canPerformAction = false;
             currentEnemyBehaviour.Turno(Vector2.zero, enemyRb2D, enemyActions[currentActionIndex].movementData, this);
         }
     }
@@ -78,20 +82,17 @@ public class EnemyController : MonoBehaviour
 
     public void OnBehaviorCompleted()
     {
-        // Debug.Log("Comportamiento del enemigo completado. Eligiendo siguiente acción...");
-        // SOLUCION 1: Resetear canPerformAction para permitir la próxima acción
         canPerformAction = true;
-        
-        // --- ¡NUEVO! Resetear las animaciones antes de elegir la siguiente acción ---
+
         if (slimeAnimation != null)
         {
             slimeAnimation.ResetAllActionAnimations();
         }
-        
+
         PickRandomBehavior();
     }
 
-    private void PickRandomBehavior()
+    protected void PickRandomBehavior()
     {
         if (enemyActions.Count == 0)
         {
@@ -99,18 +100,16 @@ public class EnemyController : MonoBehaviour
             currentEnemyBehaviour = null;
             return;
         }
-        //elige una de los comportamients  que tiene añadidos
         currentActionIndex = Random.Range(0, enemyActions.Count);
         SetEnemyBehaviour(currentActionIndex);
 
-        // --- ¡NUEVO! Rotar al slime hacia el jugador al elegir un nuevo comportamiento ---
         if (slimeAnimation != null && playerTransform != null)
         {
             slimeAnimation.RotateSlime(playerTransform.position);
         }
     }
 
-    public void SetEnemyBehaviour(int index)
+    public virtual void SetEnemyBehaviour(int index)
     {
         if (index < 0 || index >= enemyActions.Count)
         {
@@ -121,7 +120,6 @@ public class EnemyController : MonoBehaviour
         currentActionIndex = index;
         EnemyActionEntry selectedAction = enemyActions[currentActionIndex];
 
-        // Asegurarse de que slimeAnimation no es null antes de llamar a sus métodos
         if (slimeAnimation == null)
         {
             Debug.LogError("SlimeAnimation no está asignado en EnemyController. No se pueden reproducir animaciones.");
@@ -132,27 +130,39 @@ public class EnemyController : MonoBehaviour
         {
             case BehaviorType.MoveEnemy:
                 currentEnemyBehaviour = new EnemyBehaviourBase(playerTransform, this);
-                slimeAnimation.SetWalkingAnimation(true); // Activar animación de caminata
+                slimeAnimation.SetWalkingAnimation(true);
                 break;
             case BehaviorType.FollowPlayer:
                 currentEnemyBehaviour = new EnemyBehaviourBase(playerTransform, this);
-                slimeAnimation.PlayAttackAnimation(1); // Activar animación de ataque 1
+                slimeAnimation.PlayAttackAnimation(1);
                 break;
             case BehaviorType.FollowWithYOffset:
                 currentEnemyBehaviour = new EnemyBehaviour2(playerTransform, this);
-                slimeAnimation.PlayAttackAnimation(1); // Activar animación de ataque 1
+                slimeAnimation.PlayAttackAnimation(1);
                 break;
             case BehaviorType.SineFollow:
                 currentEnemyBehaviour = new EnemyBehaviour3(playerTransform, this);
-                slimeAnimation.PlayAttackAnimation(2); // Activar animación de ataque 2
+                slimeAnimation.PlayAttackAnimation(2);
                 break;
             default:
                 Debug.LogWarning($"Tipo de comportamiento no implementado: {selectedAction.behaviorType}. Usando FollowPlayer por defecto.");
                 currentEnemyBehaviour = new EnemyBehaviourBase(playerTransform, this);
-                slimeAnimation.PlayAttackAnimation(1); // Por defecto, una animación de ataque
+                slimeAnimation.PlayAttackAnimation(1);
                 break;
         }
 
         Debug.Log($"Enemigo ahora usando comportamiento: {selectedAction.name} ({selectedAction.behaviorType})");
+    }
+
+    // Método auxiliar para que los patrones del jefe puedan iniciar un FollowPlayer
+    protected void ExecuteFollowPlayer(MovementData data)
+    {
+        currentEnemyBehaviour = new EnemyBehaviourBase(playerTransform, this);
+        currentEnemyBehaviour.Turno(Vector2.zero, enemyRb2D, data, this);
+        if (slimeAnimation != null) // Asegúrate de que slimeAnimation esté asignado
+        {
+            slimeAnimation.PlayAttackAnimation(1); // O la animación que corresponda a FollowPlayer
+        }
+        Debug.Log("Ejecutando comportamiento: FollowPlayer.");
     }
 }

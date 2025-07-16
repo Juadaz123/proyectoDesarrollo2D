@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2254084685262476810}
-  - component: {fileID: 3667170556514189071}
+  - component: {fileID: 1604834563881074025}
+  - component: {fileID: 2431869986924656808}
   - component: {fileID: 7312030487090168517}
   - component: {fileID: 7399716921862954511}
+  - component: {fileID: 7804580501603791132}
   m_Layer: 0
   m_Name: DeathBoss
   m_TagString: Enemy
@@ -35,7 +37,7 @@ Transform:
   - {fileID: 5756295085251312377}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3667170556514189071
+--- !u!114 &1604834563881074025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,13 +46,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 4852360647196596727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ca691293dd44f14ba2cb01cc5ed9076, type: 3}
+  m_Script: {fileID: 11500000, guid: cbe174fd8fbb3c74e9481cbe04120519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseStats: {fileID: 11400000, guid: 6812e579aef20fe44bb377e1a9b3368d, type: 2}
-  isEvationFiscal: 0
-  _collisionDamageDealerTag: PlayerAttack
-  _triggerDamageDealerTag: PlayerAttack
+  attackColliderObject: {fileID: 7444324253902666456}
+  cooldownDaage: 1.2
+--- !u!114 &2431869986924656808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4852360647196596727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725a8f5261cbfb34c955379eed251e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 0}
+  enemyRb2D: {fileID: 0}
+  enemyActions: []
+  bossPatterns:
+  - name: seguir
+    patternType: 0
+    duration: 1
+    movementDataOverride: {fileID: 11400000, guid: b5d1ea1f042e31b419454d2c3e27b9bb, type: 2}
+  - name: special
+    patternType: 4
+    duration: 0
+    movementDataOverride: {fileID: 11400000, guid: a7ba9e621e8aeef4da151c0751fb13ec, type: 2}
+  - name: spera
+    patternType: 5
+    duration: 3
+    movementDataOverride: {fileID: 11400000, guid: c25a643a69b0c9c4a919ad71adb9783e, type: 2}
 --- !u!212 &7312030487090168517
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -128,6 +156,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!50 &7804580501603791132
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4852360647196596727}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &7444324253902666456
 GameObject:
   m_ObjectHideFlags: 0

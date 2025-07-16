@@ -177,7 +177,8 @@ public class PlayerController : MonoBehaviour
 
                 if (laucher != null)
                 {
-                    laucher.InstanciarNuevoObjeto();
+                    //FM usa el add event para invocarlo
+                    //laucher.InstanciarNuevoObjeto();
                 }
                 else
                 {

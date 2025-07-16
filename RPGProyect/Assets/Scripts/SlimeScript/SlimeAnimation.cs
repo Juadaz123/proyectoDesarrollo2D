@@ -10,7 +10,7 @@ public class SlimeAnimation : MonoBehaviour
     private bool isDamageActive = false; 
     private bool isDeathActive = false; 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         animatorSlime = GetComponent<Animator>();
 

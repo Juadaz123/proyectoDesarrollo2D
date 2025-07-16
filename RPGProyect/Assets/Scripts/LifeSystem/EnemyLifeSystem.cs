@@ -80,8 +80,6 @@ public class EnemyLifeSystem : LifeScript
             {
                 TakeDamage(damageDealer.DamageAmount, damageDealer.DamageType);
 
-                // Aquí podrías añadir la lógica para el knockback si quieres que el enemigo retroceda
-                // Ejemplo de knockback:
                 Rigidbody2D enemyRb = GetComponent<Rigidbody2D>();
                  if (enemyRb != null && damageDealer.DamageAmount > 0) // Solo si hay daño para aplicar knockback
                 {
