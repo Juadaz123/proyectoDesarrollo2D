@@ -9,7 +9,7 @@ public class NextLevelDoor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && InventoryManager.Instance.keys >= 1)
         {
             // Add current floor to visited list
             GameManager.Instance.AddVisitedFloor(SceneManager.GetActiveScene().name);
@@ -22,14 +22,14 @@ public class NextLevelDoor : MonoBehaviour
             if (availableScenes.Count > 0)
             {
                 string randomScene = availableScenes[Random.Range(0, availableScenes.Count)];
-                         FindFirstObjectByType<FadeController>().FadeToScene(randomScene);
+                FindFirstObjectByType<FadeController>().FadeToScene(randomScene);
             }
             else
             {
                 Debug.Log("No new floors available!");
-                // Optional: Load a final scene or loop back
-                // SceneManager.LoadScene("EndGameScene");
+
             }
         }
     }
+
 }
