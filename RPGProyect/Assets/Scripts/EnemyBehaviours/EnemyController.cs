@@ -159,10 +159,33 @@ public class EnemyController : MonoBehaviour
     {
         currentEnemyBehaviour = new EnemyBehaviourBase(playerTransform, this);
         currentEnemyBehaviour.Turno(Vector2.zero, enemyRb2D, data, this);
-        if (slimeAnimation != null) // Asegúrate de que slimeAnimation esté asignado
+        if (slimeAnimation != null)
         {
-            slimeAnimation.PlayAttackAnimation(1); // O la animación que corresponda a FollowPlayer
+            slimeAnimation.PlayAttackAnimation(1);
         }
-        Debug.Log("Ejecutando comportamiento: FollowPlayer.");
+        // Debug.Log("Ejecutando comportamiento: FollowPlayer.");
+    }
+
+        protected void ExecuteFollowWithYOffset(MovementData data)
+    {
+        currentEnemyBehaviour = new EnemyBehaviour2(playerTransform, this);
+        currentEnemyBehaviour.Turno(Vector2.zero, enemyRb2D, data, this);
+        if (slimeAnimation != null)
+        {
+            slimeAnimation.PlayAttackAnimation(1); // O la animación apropiada para este ataque
+        }
+        Debug.Log("Ejecutando comportamiento: Follow With Y Offset.");
+    }
+
+    // Método auxiliar para que los patrones del jefe puedan iniciar un SineFollow
+    protected void ExecuteSineFollow(MovementData data)
+    {
+        currentEnemyBehaviour = new EnemyBehaviour3(playerTransform, this);
+        currentEnemyBehaviour.Turno(Vector2.zero, enemyRb2D, data, this);
+        if (slimeAnimation != null)
+        {
+            slimeAnimation.PlayAttackAnimation(2); // O la animación apropiada para este ataque
+        }
+        Debug.Log("Ejecutando comportamiento: Sine Follow.");
     }
 }

@@ -8,7 +8,7 @@ public class BossController : EnemyController
     public enum BossPatternType
     {
         FollowWaitFollow,
-        MeleeAttackPattern,
+        FollowOffsetPattern,
         RangedAttackPattern,
         DefensivePattern,
         SpecialAbilityPattern,
@@ -76,8 +76,8 @@ public class BossController : EnemyController
             case BossPatternType.FollowWaitFollow:
                 currentBossPatternCoroutine = StartCoroutine(FollowWaitFollowPattern(selectedPattern.movementDataOverride, selectedPattern.duration));
                 break;
-            case BossPatternType.MeleeAttackPattern:
-                currentBossPatternCoroutine = StartCoroutine(MeleeAttackPatternCoroutine());
+            case BossPatternType.FollowOffsetPattern:
+                currentBossPatternCoroutine = StartCoroutine(FollowWaitFollowPattern(selectedPattern.movementDataOverride, selectedPattern.duration));
                 break;
             case BossPatternType.RangedAttackPattern:
                 currentBossPatternCoroutine = StartCoroutine(RangedAttackPatternCoroutine());
@@ -139,27 +139,42 @@ public class BossController : EnemyController
         if (slimeAnimation != null) slimeAnimation.PlayAttackAnimation(1);
         yield return new WaitForSeconds(1f);
 
-        Debug.Log($"Esperando {duration} segundo.");
-        enemyRb2D.linearVelocity = Vector2.zero;
-        if (slimeAnimation != null) slimeAnimation.SetWalkingAnimation(false);
+        BossIdleeAnimation();
         yield return new WaitForSeconds(duration);
+        slimeAnimation.YouCanDamgeMe = false;
 
-        Debug.Log("Ejecutando segundo FollowPlayer.");
         ExecuteFollowPlayer(data);
         if (slimeAnimation != null) slimeAnimation.PlayAttackAnimation(2);
+        yield return new WaitForSeconds(1f);
+
+        BossIdleeAnimation();
         yield return new WaitForSeconds(duration);
-        enemyRb2D.linearVelocity = Vector2.zero;
-        if (slimeAnimation != null) slimeAnimation.SetWalkingAnimation(false);
+        slimeAnimation.YouCanDamgeMe = false;
 
         Debug.Log("Patrón 'Seguir, Esperar, Seguir' completado.");
         OnBehaviorCompleted();
     }
 
-    private IEnumerator MeleeAttackPatternCoroutine()
+    private IEnumerator FollowOffsetPattern(MovementData data, float waitedDuration)
     {
+        WaitForSeconds waitedtime = new WaitForSeconds(waitedDuration);
         Debug.Log("Jefe: Iniciando patrón de ataque cuerpo a cuerpo.");
-        if (slimeAnimation != null) slimeAnimation.PlayAttackAnimation(1);
-        yield return new WaitForSeconds(4f);
+        ExecuteFollowWithYOffset(data);
+        if (slimeAnimation != null) slimeAnimation.SetWalkingAnimation(true);
+        yield return new WaitForSeconds(0.5f);
+
+        slimeAnimation.PlayAttackAnimation(1);
+        yield return new WaitForSeconds(1f);
+
+        ExecuteSineFollow(data);
+        slimeAnimation.PlayAttackAnimation(2);
+        yield return new WaitForSeconds(2f);
+
+        BossIdleeAnimation();
+        yield return waitedtime;
+        slimeAnimation.YouCanDamgeMe = false;
+
+
         Debug.Log("Jefe: Patrón de ataque cuerpo a cuerpo completado.");
         OnBehaviorCompleted();
     }
@@ -198,5 +213,14 @@ public class BossController : EnemyController
         yield return new WaitForSeconds(duration);
         Debug.Log("Jefe: Patrón de inactividad completado.");
         OnBehaviorCompleted();
+    }
+
+    //espera (sele puede hacer daño al jefe)
+    private void BossIdleeAnimation()
+    {
+        slimeAnimation.YouCanDamgeMe =true;
+        enemyRb2D.linearVelocity = Vector2.zero;
+        if (slimeAnimation != null) slimeAnimation.SetWalkingAnimation(false);
+    
     }
 }

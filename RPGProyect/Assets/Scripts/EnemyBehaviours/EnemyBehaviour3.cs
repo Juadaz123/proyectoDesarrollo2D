@@ -14,9 +14,6 @@ public class EnemyBehaviour3 : EnemyBehaviourBase
         // Valores fijos o aleatorios internos para amplitud y frecuencia del seno
         _sineAmplitude = 5f; // Ejemplo de valor fijo
         _sineFrequency = 2f; // Ejemplo de valor fijo
-        // Si quisieras que fueran aleatorios, podrías usar:
-        // _sineAmplitude = Random.Range(3f, 7f);
-        // _sineFrequency = Random.Range(1f, 3f);
         Debug.Log($"EnemyBehaviourSineFollow instanciado con Amplitud: {_sineAmplitude}, Frecuencia: {_sineFrequency}");
     }
 

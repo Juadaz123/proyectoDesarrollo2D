@@ -80,8 +80,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseStats: {fileID: 11400000, guid: efbaec0bb9cd4b045b6decab4a3dda63, type: 2}
-  usaBarraVida: 0
-  lifeBarImage: {fileID: 0}
   isEvationFiscal: 0
   _collisionDamageDealerTag: Hazards
   _triggerDamageDealerTag: Hazards
@@ -128,7 +126,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7978735674136817684, guid: 1ad737411d9065d4484f335cf0582f5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -202,7 +200,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 0.93}
+  m_Size: {x: 0.5, y: 0.9}
   m_Direction: 0
 --- !u!114 &4085043139886614840
 MonoBehaviour:
@@ -325,7 +323,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8450266882778897523}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

@@ -137,12 +137,12 @@ TextureImporter:
       name: Soldier-Walk_0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 39
-        width: 19
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 41
+        y: 40
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -159,12 +159,12 @@ TextureImporter:
       name: Soldier-Walk_1
       rect:
         serializedVersion: 2
-        x: 140
-        y: 39
-        width: 19
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 141
+        y: 40
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -181,12 +181,12 @@ TextureImporter:
       name: Soldier-Walk_2
       rect:
         serializedVersion: 2
-        x: 240
-        y: 39
-        width: 19
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 241
+        y: 40
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -203,12 +203,12 @@ TextureImporter:
       name: Soldier-Walk_3
       rect:
         serializedVersion: 2
-        x: 340
-        y: 39
-        width: 19
-        height: 22
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 341
+        y: 40
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -225,12 +225,12 @@ TextureImporter:
       name: Soldier-Walk_4
       rect:
         serializedVersion: 2
-        x: 440
-        y: 39
-        width: 19
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 441
+        y: 40
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -247,12 +247,12 @@ TextureImporter:
       name: Soldier-Walk_5
       rect:
         serializedVersion: 2
-        x: 540
-        y: 39
-        width: 19
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 541
+        y: 40
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -269,12 +269,12 @@ TextureImporter:
       name: Soldier-Walk_6
       rect:
         serializedVersion: 2
-        x: 640
-        y: 39
-        width: 19
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 641
+        y: 40
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -291,12 +291,12 @@ TextureImporter:
       name: Soldier-Walk_7
       rect:
         serializedVersion: 2
-        x: 740
-        y: 39
-        width: 19
-        height: 22
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 741
+        y: 40
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

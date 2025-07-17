@@ -7,7 +7,7 @@ public class BossScript : SlimeAnimation
     [SerializeField] private float cooldownDaage = 1.2f;
     private SpriteRenderer sprite;
 
-    private bool YouCanDamgeMe;
+    public bool YouCanDamgeMe;
 
     protected override void Awake()
     {
@@ -17,27 +17,28 @@ public class BossScript : SlimeAnimation
         Debug.LogError("bossScript: No encuentra el compopnente SpriteRedered");
     }
 
-    public void DamageBossBool()
+    public void DamageIndicatorColor()
     {
-        if (YouCanDamgeMe == false)
+        if (YouCanDamgeMe == true)
         {
-            YouCanDamgeMe = true;
-            Debug.Log("Se puede hacer daño al jefe " + YouCanDamgeMe);
-        }
-        else if (YouCanDamgeMe == true)
-        {
-            YouCanDamgeMe = false;
-            Debug.Log("Se puede hacer daño al jefe " + YouCanDamgeMe);
-        
+            StartCoroutine(ChangeColorICanDamageMe());
         }
 
     }
     public void BossTakeDamageAnimation()
     {
         if (YouCanDamgeMe == true)
+        {
+            Debug.LogWarning(YouCanDamgeMe + "valor bool daño");
+            // StartCoroutine(ChangeBossColorHit());
             StartCoroutine(ChangeBossColorHit());
+            PlayDamageAnimation();
+        }
         else
+        {
+            Debug.LogWarning(YouCanDamgeMe + "valor bool daño");
             StartCoroutine(ChangeBossColorNoHit());
+        }
 
     }
 
@@ -56,5 +57,12 @@ public class BossScript : SlimeAnimation
         yield return new WaitForSeconds(cooldownDaage);
         sprite.color = Color.white;
         StopCoroutine(ChangeBossColorNoHit());
+    }
+    private IEnumerator ChangeColorICanDamageMe()
+    {
+        sprite.color = Color.yellow;
+        yield return new WaitForSeconds(cooldownDaage);
+        sprite.color = Color.white;
+        StopCoroutine(ChangeColorICanDamageMe());
     }
 }

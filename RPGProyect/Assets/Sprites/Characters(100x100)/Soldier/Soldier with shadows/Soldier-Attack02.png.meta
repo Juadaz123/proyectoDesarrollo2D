@@ -137,12 +137,12 @@ TextureImporter:
       name: Soldier-Attack02_0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 39
-        width: 19
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -159,19 +159,19 @@ TextureImporter:
       name: Soldier-Attack02_1
       rect:
         serializedVersion: 2
-        x: 140
-        y: 39
-        width: 21
-        height: 31
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a027a15d48b2f9dc0800000000000000
+      spriteID: 32608cf8a2f931b40ac932ff3ae5ca5d
       internalID: -3630134925126372854
       vertices: []
       indices: 
@@ -181,19 +181,19 @@ TextureImporter:
       name: Soldier-Attack02_2
       rect:
         serializedVersion: 2
-        x: 242
-        y: 39
-        width: 20
-        height: 30
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 832167d2829fa88c0800000000000000
+      spriteID: 5a8e257c33c8a224cb59dc360321e090
       internalID: -3996107768381173192
       vertices: []
       indices: 
@@ -203,19 +203,19 @@ TextureImporter:
       name: Soldier-Attack02_3
       rect:
         serializedVersion: 2
-        x: 341
-        y: 39
-        width: 30
-        height: 26
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ad2de8debf3d32170800000000000000
+      spriteID: 13acc3dfaa6bb714684b1cbf26ac944c
       internalID: 8152592829446542042
       vertices: []
       indices: 
@@ -225,19 +225,19 @@ TextureImporter:
       name: Soldier-Attack02_4
       rect:
         serializedVersion: 2
-        x: 441
-        y: 39
-        width: 30
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f792061eeeb4fa440800000000000000
+      spriteID: f0df2efd818afcb4399350c438a7ec11
       internalID: 4949258004858939775
       vertices: []
       indices: 
@@ -247,19 +247,19 @@ TextureImporter:
       name: Soldier-Attack02_5
       rect:
         serializedVersion: 2
-        x: 541
-        y: 39
-        width: 30
-        height: 21
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 500
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c167c9a27739e8090800000000000000
+      spriteID: d35023654a932a740b39c92673ff8fca
       internalID: -8030318945529727460
       vertices: []
       indices: 
@@ -285,8 +285,6 @@ TextureImporter:
       Soldier-Attack02_3: 8152592829446542042
       Soldier-Attack02_4: 4949258004858939775
       Soldier-Attack02_5: -8030318945529727460
-      Soldier-Attack02_6: -5444968504786303033
-      Soldier-Attack02_7: 4400260421584532726
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
