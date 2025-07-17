@@ -36582,6 +36582,10 @@ MonoBehaviour:
   coinText: {fileID: 1153929416}
   scrollText: {fileID: 1616030139}
   keyText: {fileID: 625713519}
+  listaCorazones: []
+  corazonLleno: {fileID: 0}
+  corazonMitad: {fileID: 0}
+  corazonQuitado: {fileID: 0}
 --- !u!4 &293305707
 Transform:
   m_ObjectHideFlags: 0
@@ -36804,7 +36808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &625713519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38837,7 +38841,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1153929414
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40147,7 +40151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1616030137
 RectTransform:
   m_ObjectHideFlags: 0
