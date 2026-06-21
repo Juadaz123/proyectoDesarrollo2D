@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2284671c928e7c3478de51c12ba2d7be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbySceneName: PantallaTutorial
+  lobbySceneName: Floor1_a
 --- !u!4 &890859968
 Transform:
   m_ObjectHideFlags: 0
@@ -846,7 +846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 21, y: 0}
   m_SizeDelta: {x: -140, y: -140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2003618636
@@ -869,7 +869,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Turnbound
+  m_text: 'Mover - Q
+
+    Ataque debil - 1
+
+    Ataque fuerte- 2
+
+    Ataque Distancia
+    - 3'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe8feeed5294f2f4f9c201468cfe8a4a, type: 2}
   m_sharedMaterial: {fileID: 3765483588146425172, guid: fe8feeed5294f2f4f9c201468cfe8a4a, type: 2}
@@ -896,19 +903,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 240
-  m_fontSizeBase: 240
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 16
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -19.26
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -7.51
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

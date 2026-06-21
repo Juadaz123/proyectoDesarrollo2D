@@ -1,14 +1,13 @@
 using Unity.VisualScripting;
-using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuInicio : MonoBehaviour
 {
-    [SerializeField] private SceneAsset Lobby;
-    public void GoToLobby()
+    [SerializeField] private string lobbySceneName = "NombreDeTuEscena";
+
+    public void GoToTUORIAL()
     {
-        string lobbyScene = Lobby.name;
-        SceneManager.LoadScene(lobbyScene);
+        SceneManager.LoadScene(lobbySceneName);
     }
-    
 }
